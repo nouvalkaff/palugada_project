@@ -1,19 +1,20 @@
 // Declare variable to use Express function
-const Express = require("express");
+import Express, { json, urlencoded } from "express";
 
 // Declare other essential packages
-const Cors = require("cors");
-const { Sequelize } = require("sequelize");
+import Cors from "cors";
+import { Sequelize } from "sequelize";
 
-// Requiring "dotenv" config to allow access to .env file
-require("dotenv").config();
+// Requiring / importing "dotenv" config to allow access to .env file
+import { config } from "dotenv";
+config();
 
 // Declare app variable to allow in creating other essential functions
 const PORT = process.env.PORT;
 const app = Express();
 
-app.use(Express.json());
-app.use(Express.urlencoded({ extended: false }));
+app.use(json());
+app.use(urlencoded({ extended: false }));
 
 /**
  * Enable CORS
@@ -24,9 +25,9 @@ app.use(Express.urlencoded({ extended: false }));
  */
 app.use(Cors({ origin: "*" }));
 
-// const userRoute = require("./routes/users_routers");
+import shrinkerRoute from "./modules/link_shrinker/routers.js";
 
-// app.use("/api/dmp/user", userRoute);
+app.use("/api/palugada/shrinker", shrinkerRoute);
 
 const sequelize = new Sequelize("palugada", "postgres", "12345678", {
   host: "127.0.0.1",
