@@ -40,7 +40,7 @@ app.all("*", (req, res) => {
     code: 200,
     statustext: "OK",
     success: true,
-    message: "Welcome to API Palugada Project by Mohamad Nouval Abdel Alkaf",
+    message: "Welcome to API PALUGADA Project by Mohamad Nouval Abdel Alkaf",
   });
 });
 
