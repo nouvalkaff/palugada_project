@@ -1,13 +1,17 @@
+import { ShrinkMyLongURLPlease } from "./helper_function.js";
+
 export async function doItNow(req, res) {
   try {
     const URL_ORI = req.body.url_ori;
 
-    console.log(URL_ORI, "URL_ORI");
+    const SHRINKED_URL = ShrinkMyLongURLPlease(URL_ORI);
 
     return res.status(200).send({
       code: 200,
       codeMessage: "OK",
       success: true,
+      urlOri: URL_ORI,
+      urlShrinked: SHRINKED_URL,
     });
   } catch (error) {
     console.error(error);

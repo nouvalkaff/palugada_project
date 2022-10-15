@@ -1,11 +1,10 @@
-export async function ShrinkMyLongURLPlease(VeryLongURL) {
-  try {
-    // Testing area
-    const LAST_CODE_1 = "";
-    // Testing area
+import { config } from "dotenv";
+config();
 
-    // Step 1, prepare prefix
-    const PREFIX = "http://adagulap.id/";
+export function ShrinkMyLongURLPlease(VeryLongURL) {
+  try {
+    // Step 1, obtain prefix from file .env
+    const PREFIX = process.env.PREFIX;
 
     // Step 2, get the pattern with regex named 'REGEX_URL_INFO'
 
@@ -32,20 +31,34 @@ export async function ShrinkMyLongURLPlease(VeryLongURL) {
     const FIRST_GROUP = match_URL[1];
     const SECOND_GROUP = match_URL[2];
 
-    const TIMESTAMP = Date.now();
+    // *note* Using ASCII character (47-57,  65-90, 97-122) *note*
 
-    // *note* THERE ARE 127 ASCII CHARACTER *note*
-    const RANDOM_NUMBER = Math.random(128);
-    // const GET_ASCII =
-    function getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    // Step 4, the unique code will be 4 chars long
+    const LEN_CHARS = 4;
+    let uniqueChar = "";
+
+    for (let i = 0; i < LEN_CHARS; i++) {
+      const ORDER = getRandomInt(1, 5);
+
+      // getRandomInt(48, 58) generate char 0 - 9
+      // getRandomInt(65, 91) generate char A - Z
+      // getRandomInt(97, 123) generate char a - z
+
+      if (ORDER === 1) uniqueChar += String.fromCharCode(getRandomInt(48, 58));
+      if (ORDER === 2) uniqueChar += String.fromCharCode(getRandomInt(65, 91));
+      if (ORDER === 3) uniqueChar += String.fromCharCode(getRandomInt(97, 123));
+      if (ORDER === 4) uniqueChar += String.fromCharCode(getRandomInt(97, 123));
     }
 
-    console.log(getRandomInt(65, 127));
+    // Return the unique url prefix + unique char ==> Example: 'alwy.id/dN2m'
+    return PREFIX + uniqueChar;
   } catch (error) {
     console.error(error);
   }
 }
-ShrinkMyLongURLPlease("youtube.com/watch?v=osdoLjUNFnA");
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
