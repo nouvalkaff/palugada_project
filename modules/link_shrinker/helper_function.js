@@ -47,10 +47,19 @@ export function ShrinkMyLongURLPlease(VeryLongURL) {
       if (ORDER === 1) uniqueChar += String.fromCharCode(getRandomInt(48, 58));
       if (ORDER === 2) uniqueChar += String.fromCharCode(getRandomInt(65, 91));
       if (ORDER === 3) uniqueChar += String.fromCharCode(getRandomInt(97, 123));
-      if (ORDER === 4) uniqueChar += String.fromCharCode(getRandomInt(97, 123));
+      if (ORDER === 4) {
+        const LAST_ORDER = getRandomInt(1, 4);
+
+        if (LAST_ORDER === 1)
+          uniqueChar += String.fromCharCode(getRandomInt(48, 58));
+        if (LAST_ORDER === 2)
+          uniqueChar += String.fromCharCode(getRandomInt(65, 91));
+        if (LAST_ORDER === 3)
+          uniqueChar += String.fromCharCode(getRandomInt(97, 123));
+      }
     }
 
-    // Return the unique url prefix + unique char ==> Example: 'alwy.id/dN2m'
+    // Return the unique url prefix + unique char ==> Example: 'plgd.id/dN2m'
     return PREFIX + uniqueChar;
   } catch (error) {
     console.error(error);

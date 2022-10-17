@@ -1,12 +1,12 @@
 // Declare variable to use Express function
-import Express, { json, urlencoded } from "express";
+const Express = require("express");
 
 // Declare other essential packages
-import Cors from "cors";
-import { Sequelize } from "sequelize";
+const Cors = require("cors");
+const { Sequelize } = require("sequelize");
 
 // Requiring / importing "dotenv" config to allow access to .env file
-import { config } from "dotenv";
+const config = require("dotenv");
 config();
 
 // Declare app variable to allow in creating other essential functions
@@ -25,7 +25,7 @@ app.use(urlencoded({ extended: false }));
  */
 app.use(Cors({ origin: "*" }));
 
-import shrinkerRoute from "./modules/link_shrinker/routers.js";
+const shrinkerRoute = require("./modules/link_shrinker/routers.js");
 
 app.use("/api/palugada/shrinker", shrinkerRoute);
 
