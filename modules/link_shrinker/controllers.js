@@ -1,6 +1,6 @@
-import { ShrinkMyLongURLPlease } from "./helper_function.js";
+const { ShrinkMyLongURLPlease } = require("./helper_function");
 
-export async function doItNow(req, res) {
+exports.doItNow = async (req, res) => {
   try {
     const URL_ORI = req.body.url_ori;
 
@@ -21,4 +21,4 @@ export async function doItNow(req, res) {
       success: false,
     });
   }
-}
+};

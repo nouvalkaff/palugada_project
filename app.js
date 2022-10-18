@@ -6,15 +6,14 @@ const Cors = require("cors");
 const { Sequelize } = require("sequelize");
 
 // Requiring / importing "dotenv" config to allow access to .env file
-const config = require("dotenv");
-config();
+require("dotenv").config();
 
 // Declare app variable to allow in creating other essential functions
 const PORT = process.env.PORT;
 const app = Express();
 
-app.use(json());
-app.use(urlencoded({ extended: false }));
+app.use(Express.json());
+app.use(Express.urlencoded({ extended: false }));
 
 /**
  * Enable CORS

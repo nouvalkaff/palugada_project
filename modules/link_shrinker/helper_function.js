@@ -1,7 +1,4 @@
-import { config } from "dotenv";
-config();
-
-export function ShrinkMyLongURLPlease(VeryLongURL) {
+exports.ShrinkMyLongURLPlease = (VeryLongURL) => {
   try {
     // Step 1, obtain prefix from file .env
     const PREFIX = process.env.PREFIX;
@@ -64,7 +61,7 @@ export function ShrinkMyLongURLPlease(VeryLongURL) {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);

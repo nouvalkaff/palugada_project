@@ -1,7 +1,7 @@
-import { Router } from "express";
+const { Router } = require("express");
 const router = Router();
-import { doItNow } from "./controllers.js";
+const { doItNow } = require("./controllers");
 
 router.post("/doit", doItNow);
 
-export default router;
+module.exports = router;
