@@ -1,7 +1,11 @@
-exports.ShrinkMyLongURLPlease = (VeryLongURL) => {
+const { User_URL } = require("../../models");
+const PREFIX_PALUGADA = process.env.PREFIX;
+const LEN_CHARACTER = 4;
+
+function ShrinkMyLongURLPlease(VeryLongURL) {
   try {
     // Step 1, obtain prefix from file .env
-    const PREFIX = process.env.PREFIX;
+    const PREFIX = PREFIX_PALUGADA;
 
     // Step 2, get the pattern with regex named 'REGEX_URL_INFO'
 
@@ -31,7 +35,7 @@ exports.ShrinkMyLongURLPlease = (VeryLongURL) => {
     // *note* Using ASCII character (47-57,  65-90, 97-122) *note*
 
     // Step 4, the unique code will be 4 chars long
-    const LEN_CHARS = 4;
+    const LEN_CHARS = LEN_CHARACTER;
     let uniqueChar = "";
 
     for (let i = 0; i < LEN_CHARS; i++) {
@@ -61,10 +65,30 @@ exports.ShrinkMyLongURLPlease = (VeryLongURL) => {
   } catch (error) {
     console.error(error);
   }
-};
+}
+
+async function ShrinkAgainPlease(VeryLongURL) {
+  try {
+    const newUniqueChar = ShrinkMyLongURLPlease(VeryLongURL);
+
+    const IS_EXIST = await User_URL.findOne({
+      where: { uniqchar: newUniqueChar },
+    });
+
+    if (!IS_EXIST) return newUniqueChar;
+    else ShrinkAgainPlease(VeryLongURL);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
+
+module.exports = {
+  ShrinkMyLongURLPlease,
+  ShrinkAgainPlease,
+};

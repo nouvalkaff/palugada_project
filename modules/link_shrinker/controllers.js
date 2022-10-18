@@ -1,23 +1,31 @@
 const { User_URL } = require("../../models");
-const { ShrinkMyLongURLPlease } = require("./helper_function");
+const {
+  ShrinkMyLongURLPlease,
+  ShrinkAgainPlease,
+} = require("./helper_function");
 
 exports.doItNow = async (req, res) => {
   try {
     const URL_ORI = req.body.url_ori;
 
+    /**
+     * shrinkedURL[0] = plgd.id/5nAu
+     * shrinkedURL[1] = https://www.youtube.com
+     * shrinkedURL[2] = /watch?v=dcsyvKOw_s4&t=573s
+     */
     let shrinkedURL = ShrinkMyLongURLPlease(URL_ORI);
 
-    let is_exist = await User_URL.findOne({
+    // Check whether the a URL is already exist or not
+    const IS_EXIST = await User_URL.findOne({
       where: { params: shrinkedURL[2] },
     });
 
-    if (is_exist) {
-      const UNIQ_CHAR_DB = is_exist.dataValues.uniqchar;
+    if (IS_EXIST) {
+      const UNIQ_CHAR_DB = IS_EXIST.dataValues.uniqchar;
 
       // THIS CONDITION IS HANDLING SAME GENERATED SHRINKED URL AND GENERATE IT AGAIN
-      if (shrinkedURL[0] === UNIQ_CHAR_DB) {
-        shrinkedURL = ShrinkMyLongURLPlease(URL_ORI);
-      }
+      if (shrinkedURL[0] === UNIQ_CHAR_DB)
+        shrinkedURL = await ShrinkAgainPlease(URL_ORI);
 
       // regular expression to get "domain.xyz" from "http(s)://domain.xyz"
       const REGEX_DOMAIN = /\w+\.\w{2,}$/;
@@ -25,19 +33,19 @@ exports.doItNow = async (req, res) => {
       // return "domain.xyz" only from "http(s)://domain.xyz"
       const DOMAIN_ONLY_BODY = shrinkedURL[1].match(REGEX_DOMAIN)[0];
 
-      // get domain data from database by params of original URL in variable 'is_exist'
-      const DOMAIN_DB = is_exist.dataValues.domain;
+      // get domain data from database by params of original URL in variable 'IS_EXIST'
+      const DOMAIN_DB = IS_EXIST.dataValues.domain;
 
       /**
        * THIS CONDITION IS HANDLING SAME DOMAIN AND ITS PARAMS FROM BODY
        * IDENTICAL URL FROM BODY AND DATABASE WILL USE EXISTING SHRINKED URL IN DATABASE
        
        * DOMAIN_DB.includes(DOMAIN_ONLY_BODY) ==> Check same string domain name in DB and from body
-       * is_exist.dataValues.params === shrinkedURL[2] ==> Check same unique original url params from body
+       * IS_EXIST.dataValues.params === shrinkedURL[2] ==> Check same unique original url params from body
        */
       if (
         DOMAIN_DB.includes(DOMAIN_ONLY_BODY) &&
-        is_exist.dataValues.params === shrinkedURL[2]
+        IS_EXIST.dataValues.params === shrinkedURL[2]
       ) {
         return res.status(200).send({
           code: 200,
@@ -46,7 +54,7 @@ exports.doItNow = async (req, res) => {
           message:
             "Identical URL found in DB, please use this existing shrinked URL",
           urlOri: URL_ORI,
-          urlShrinked: is_exist.dataValues.uniqchar,
+          urlShrinked: IS_EXIST.dataValues.uniqchar,
         });
       }
     }
