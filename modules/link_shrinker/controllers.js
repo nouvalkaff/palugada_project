@@ -43,6 +43,8 @@ exports.doItNow = async (req, res) => {
           code: 200,
           codeMessage: "OK",
           success: true,
+          message:
+            "Identical URL found in DB, please use this existing shrinked URL",
           urlOri: URL_ORI,
           urlShrinked: is_exist.dataValues.uniqchar,
         });
@@ -60,6 +62,7 @@ exports.doItNow = async (req, res) => {
       code: 200,
       codeMessage: "OK",
       success: true,
+      message: "Here it is your new shrinked URL",
       urlOri: URL_ORI,
       urlShrinked: shrinkedURL[0],
     });
