@@ -18,9 +18,6 @@ module.exports = {
       uniqchar: {
         type: Sequelize.STRING,
       },
-      crtdate: {
-        type: Sequelize.DATE,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

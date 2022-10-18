@@ -57,7 +57,7 @@ exports.ShrinkMyLongURLPlease = (VeryLongURL) => {
     }
 
     // Return the unique url prefix + unique char ==> Example: 'plgd.id/dN2m'
-    return PREFIX + uniqueChar;
+    return [PREFIX + uniqueChar, FIRST_GROUP, SECOND_GROUP];
   } catch (error) {
     console.error(error);
   }

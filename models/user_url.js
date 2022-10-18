@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class user_url extends Model {
+  class User_URL extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,15 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  user_url.init(
+  User_URL.init(
     {
       domain: DataTypes.STRING,
       params: DataTypes.STRING,
       uniqchar: DataTypes.STRING,
-      crtdate: {
-        type: DataTypes.DATE,
-        defaultValue: new Date(),
-      },
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: new Date(),
@@ -35,5 +31,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "user_urls",
     }
   );
-  return user_url;
+  return User_URL;
 };
