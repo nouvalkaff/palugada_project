@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       original: DataTypes.TEXT,
       uniqchar: DataTypes.TEXT,
       hit: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         defaultValue: 0,
       },
       createdAt: {

@@ -21,14 +21,47 @@ function ShrinkMyLongURLPlease(longURL, length) {
 
     // length of the unique character defined in file .env
     for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * 63);
-      const genRandomChar = RANDOM_CHARS[randomIndex];
-      uniqChar += genRandomChar;
+      uniqChar += RANDOM_CHARS[Math.floor(Math.random() * 62)];
     }
 
     shortURL += uniqChar;
 
     return [uniqChar, shortURL, true];
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function checkMyUniqChars(
+  longURL,
+  UNIQ_LEN_LINK,
+  uniqueCharacters,
+  urlArray
+) {
+  try {
+    let isDuplicate = await User_URL.findOne({
+      where: { uniqchar: uniqueCharacters },
+      raw: true,
+      attributes: {
+        exclude: ["original", "hit", "createdAt", "updatedAt"],
+      },
+    });
+
+    if (isDuplicate !== null) {
+      const shrinkedAgain = ShrinkMyLongURLPlease(longURL, UNIQ_LEN_LINK);
+      const newUniqChars = shrinkedAgain[0];
+
+      // return recursive until get a new unique set of chars
+      // ALWAYS RETURNED RECUSIVE OR YOU WILL GET UNDEFINED
+      return await checkMyUniqChars(
+        longURL,
+        UNIQ_LEN_LINK,
+        newUniqChars,
+        shrinkedAgain
+      );
+    }
+
+    if (isDuplicate === null) return urlArray;
   } catch (error) {
     console.error(error);
   }
@@ -126,4 +159,5 @@ const RANDOM_CHARS = [
 module.exports = {
   ShrinkMyLongURLPlease,
   saveToDB,
+  checkMyUniqChars,
 };

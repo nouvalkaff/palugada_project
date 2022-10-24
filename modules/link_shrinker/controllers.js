@@ -1,5 +1,9 @@
 const { User_URL } = require("../../models");
-const { ShrinkMyLongURLPlease, saveToDB } = require("./helper_function");
+const {
+  ShrinkMyLongURLPlease,
+  saveToDB,
+  checkMyUniqChars,
+} = require("./helper_function");
 const UNIQ_LEN_LINK = process.env.UNIQ_LEN_LINK;
 
 exports.doItNow = async (req, res) => {
@@ -16,6 +20,12 @@ exports.doItNow = async (req, res) => {
       });
     }
 
+    /**
+     * shrinkedURL = [ '5JwbK7W', 'localhost:1927/5JwbK7W', true ]
+     * shrinkedURL[0] = unique chars
+     * shrinkedURL[1] = domain + unique chars
+     * shrinkedURL[2] = status function
+     */
     const shrinkedURL = ShrinkMyLongURLPlease(longURL, UNIQ_LEN_LINK);
 
     if (shrinkedURL[2] === false) {
@@ -27,17 +37,27 @@ exports.doItNow = async (req, res) => {
       });
     }
 
-    const savedData = await saveToDB(longURL, shrinkedURL[0]);
+    // below is a function to check the unique characters already exist or not
+    const uniqueCharsChecker = await checkMyUniqChars(
+      longURL,
+      UNIQ_LEN_LINK,
+      shrinkedURL[0],
+      shrinkedURL
+    );
 
-    if (savedData) {
-      return res.status(200).send({
-        code: 200,
-        codeMessage: "OK",
-        success: true,
-        message: "Shorter right?",
-        urlOri: longURL,
-        urlShrinked: shrinkedURL[1],
-      });
+    if (uniqueCharsChecker.length !== 0) {
+      const savedData = await saveToDB(longURL, uniqueCharsChecker[0]);
+
+      if (savedData) {
+        return res.status(200).send({
+          code: 200,
+          codeMessage: "OK",
+          success: true,
+          message: "Here is your new short URL",
+          urlOri: longURL,
+          urlShrinked: uniqueCharsChecker[1],
+        });
+      }
     }
   } catch (error) {
     console.error(error);

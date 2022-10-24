@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       hit: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
