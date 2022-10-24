@@ -10,13 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       domain: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       params: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       uniqchar: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

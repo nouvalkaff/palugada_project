@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   User_URL.init(
     {
-      domain: DataTypes.STRING,
-      params: DataTypes.STRING,
-      uniqchar: DataTypes.STRING,
+      domain: DataTypes.TEXT,
+      params: DataTypes.TEXT,
+      uniqchar: DataTypes.TEXT,
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: new Date(),

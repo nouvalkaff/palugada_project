@@ -1,67 +1,33 @@
 const { User_URL } = require("../../models");
-const PREFIX_PALUGADA = process.env.PREFIX;
-const LEN_CHARACTER = 4;
+const DOMAIN = process.env.DOMAIN;
+const URL_PKG = require("url").URL;
 
-function ShrinkMyLongURLPlease(VeryLongURL) {
+function isMyURLValid(URL) {
   try {
-    // Step 1, obtain prefix from file .env
-    const PREFIX = PREFIX_PALUGADA;
+    const checkMyURL = new URL_PKG(URL);
+    if (checkMyURL) return true;
+  } catch (err) {
+    return false;
+  }
+}
 
-    // Step 2, get the pattern with regex named 'REGEX_URL_INFO'
+function ShrinkMyLongURLPlease(longURL, length) {
+  try {
+    let uniqChar = "";
+    let shortURL = DOMAIN;
 
-    /** DESCRIPTION
-     * #1 (https\:\/{2}.*\.\w{2,5}|http\:\/{2}.*\.\w{2,5}|.*\.\w{2,5})
-     * #2 (.+)
-     
-     * FIRST GROUP is to catch pattern begin with 'http', 'https',
-     * or without both 'http or https' plus the domain name
-     
-     * SECOND GROUP is to catch string after the domain name
+    const urlValid = isMyURLValid(longURL);
 
-     * Link exp: https://keep.google.com/u/0/#LIST/1Xnb69pL6qQZsWa8iBTjS-Qxsg5kyA9BxQ7n6yPGZQdGCmzimtoxM7aBWof-mxw
-     * FIRST GROUP WILL CATCH ==> 'https://keep.google.com'
-     * SECOND GROUP WILL CATCH ==> '/u/0/#LIST/1Xnb69pL6qQZsWa8iBTjS-Qxsg5kyA9BxQ7n6yPGZQdGCmzimtoxM7aBWof-mxw'
-     */
+    if (urlValid === false) return ["", "", false];
 
-    const REGEX_URL_INFO =
-      /^(https\:\/{2}.*\.\w{2,5}|http\:\/{2}.*\.\w{2,5}|.*\.\w{2,5})(.+)$/;
-
-    // Step 3, match the long url with regex above
-    let match_URL = VeryLongURL.match(REGEX_URL_INFO);
-
-    const FIRST_GROUP = match_URL[1];
-    const SECOND_GROUP = match_URL[2];
-
-    // *note* Using ASCII character (47-57,  65-90, 97-122) *note*
-
-    // Step 4, the unique code will be 4 chars long
-    const LEN_CHARS = LEN_CHARACTER;
-    let uniqueChar = "";
-
-    for (let i = 0; i < LEN_CHARS; i++) {
-      const ORDER = getRandomInt(1, 5);
-
-      // getRandomInt(48, 58) generate char 0 - 9
-      // getRandomInt(65, 91) generate char A - Z
-      // getRandomInt(97, 123) generate char a - z
-
-      if (ORDER === 1) uniqueChar += String.fromCharCode(getRandomInt(48, 58));
-      if (ORDER === 2) uniqueChar += String.fromCharCode(getRandomInt(65, 91));
-      if (ORDER === 3) uniqueChar += String.fromCharCode(getRandomInt(97, 123));
-      if (ORDER === 4) {
-        const LAST_ORDER = getRandomInt(1, 4);
-
-        if (LAST_ORDER === 1)
-          uniqueChar += String.fromCharCode(getRandomInt(48, 58));
-        if (LAST_ORDER === 2)
-          uniqueChar += String.fromCharCode(getRandomInt(65, 91));
-        if (LAST_ORDER === 3)
-          uniqueChar += String.fromCharCode(getRandomInt(97, 123));
-      }
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * 63);
+      const genRandomChar = RANDOM_CHARS[randomIndex];
+      uniqChar += genRandomChar;
     }
 
-    // Return the unique url prefix + unique char ==> Example: 'plgd.id/dN2m'
-    return [PREFIX + uniqueChar, FIRST_GROUP, SECOND_GROUP];
+    shortURL += uniqChar;
+    return [uniqChar, shortURL, true];
   } catch (error) {
     console.error(error);
   }
@@ -88,7 +54,73 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
 
+const RANDOM_CHARS = [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+];
+
 module.exports = {
   ShrinkMyLongURLPlease,
   ShrinkAgainPlease,
+  RANDOM_CHARS,
 };
