@@ -17,9 +17,9 @@ function ShrinkMyLongURLPlease(longURL, length) {
     let shortURL = DOMAIN;
 
     const urlValid = isMyURLValid(longURL);
-
     if (urlValid === false) return ["", "", false];
 
+    // length of the unique character defined in file .env
     for (let i = 0; i < length; i++) {
       const randomIndex = Math.floor(Math.random() * 63);
       const genRandomChar = RANDOM_CHARS[randomIndex];
@@ -27,32 +27,36 @@ function ShrinkMyLongURLPlease(longURL, length) {
     }
 
     shortURL += uniqChar;
+
     return [uniqChar, shortURL, true];
   } catch (error) {
     console.error(error);
   }
 }
 
-async function ShrinkAgainPlease(VeryLongURL) {
+async function saveToDB(longURL, uniqueChars) {
   try {
-    const newUniqueChar = ShrinkMyLongURLPlease(VeryLongURL);
+    let data = {
+      original: longURL,
+      uniqchar: uniqueChars,
+      hit: 0,
+    };
 
-    const IS_EXIST = await User_URL.findOne({
-      where: { uniqchar: newUniqueChar },
-    });
+    // Create data to database
+    await User_URL.create(data);
 
-    if (!IS_EXIST) return newUniqueChar;
-    else ShrinkAgainPlease(VeryLongURL);
+    return true;
   } catch (error) {
     console.error(error);
+    return false;
   }
 }
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-}
+// function getRandomInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+// }
 
 const RANDOM_CHARS = [
   0,
@@ -121,6 +125,5 @@ const RANDOM_CHARS = [
 
 module.exports = {
   ShrinkMyLongURLPlease,
-  ShrinkAgainPlease,
-  RANDOM_CHARS,
+  saveToDB,
 };

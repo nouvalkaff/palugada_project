@@ -1,9 +1,5 @@
 const { User_URL } = require("../../models");
-const {
-  ShrinkMyLongURLPlease,
-  ShrinkAgainPlease,
-  RANDOM_CHARS,
-} = require("./helper_function");
+const { ShrinkMyLongURLPlease, saveToDB } = require("./helper_function");
 const UNIQ_LEN_LINK = process.env.UNIQ_LEN_LINK;
 
 exports.doItNow = async (req, res) => {
@@ -31,21 +27,18 @@ exports.doItNow = async (req, res) => {
       });
     }
 
-    // Create data to database
-    // await User_URL.create({
-    //   domain: shrinkedURL[1],
-    //   params: shrinkedURL[2],
-    //   uniqchar: shrinkedURL[0],
-    // });
+    const savedData = await saveToDB(longURL, shrinkedURL[0]);
 
-    return res.status(200).send({
-      code: 200,
-      codeMessage: "OK",
-      success: true,
-      message: "Shorter right?",
-      urlOri: longURL,
-      urlShrinked: shrinkedURL[1],
-    });
+    if (savedData) {
+      return res.status(200).send({
+        code: 200,
+        codeMessage: "OK",
+        success: true,
+        message: "Shorter right?",
+        urlOri: longURL,
+        urlShrinked: shrinkedURL[1],
+      });
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).send({

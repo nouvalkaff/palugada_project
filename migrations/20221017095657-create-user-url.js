@@ -9,14 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      domain: {
-        type: Sequelize.TEXT,
-      },
-      params: {
+      original: {
         type: Sequelize.TEXT,
       },
       uniqchar: {
         type: Sequelize.TEXT,
+      },
+      hit: {
+        type: Sequelize.BIGINT,
       },
       createdAt: {
         allowNull: false,
