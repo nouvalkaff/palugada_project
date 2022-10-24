@@ -11,6 +11,29 @@ function isMyURLValid(URL) {
   }
 }
 
+async function isUniqueCharsExist(uniqChars) {
+  try {
+    const isExist = await User_URL.findOne({
+      where: { uniqchar: uniqChars },
+      raw: true,
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    if (!isExist) return false;
+
+    const queryUpdate = {
+      hit: isExist.hit + 1,
+    };
+
+    await User_URL.update(queryUpdate, { where: { uniqchar: uniqChars } });
+    return isExist;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 function ShrinkMyLongURLPlease(longURL, length) {
   try {
     let uniqChar = "";
@@ -160,4 +183,5 @@ module.exports = {
   ShrinkMyLongURLPlease,
   saveToDB,
   checkMyUniqChars,
+  isUniqueCharsExist,
 };

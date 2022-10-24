@@ -26,6 +26,7 @@ app.use(Cors({ origin: "*" }));
 
 const shrinkerRoute = require("./modules/link_shrinker/routers.js");
 
+app.use("", shrinkerRoute);
 app.use("/api/palugada/shrinker", shrinkerRoute);
 
 const sequelize = new Sequelize("palugada", "postgres", "12345678", {

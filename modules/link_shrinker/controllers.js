@@ -1,10 +1,35 @@
-const { User_URL } = require("../../models");
 const {
   ShrinkMyLongURLPlease,
   saveToDB,
   checkMyUniqChars,
+  isUniqueCharsExist,
 } = require("./helper_function");
 const UNIQ_LEN_LINK = process.env.UNIQ_LEN_LINK;
+
+exports.redirectToRealURL = async (req, res) => {
+  try {
+    const uniqChars = req.params.id;
+
+    const isExist = await isUniqueCharsExist(uniqChars);
+
+    if (!isExist) {
+      return res.status(400).send({
+        code: 400,
+        codeMessage: "Bad Request",
+        success: false,
+        message: "Set of unique characters that you search is not exist",
+      });
+    }
+
+    return res
+      .writeHead(301, {
+        Location: isExist.original,
+      })
+      .end();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 exports.doItNow = async (req, res) => {
   try {
