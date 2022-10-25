@@ -50,7 +50,7 @@ exports.redirectToRealURL = async (req, res) => {
 
 exports.doItNow = async (req, res) => {
   try {
-    const longURL = req.body.url_ori;
+    const longURL = req.query.url_ori;
 
     // field url_ori cannot be empty or undefined
     if (!longURL) {
