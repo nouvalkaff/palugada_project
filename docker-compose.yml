@@ -1,23 +1,36 @@
-version: "3.3"
+version: "3.8"
 
 services:
-  app:
-    container_name: palugada
-    build: .
-    volumes:
-      - .:/palugada
-      - node_modules:/palugada/node_modules
+  palugada_backend:
+    container_name: palugada_app
+    image: palugada:0.0.3
+    build:
+      context: .
     ports:
-      - 1927:1927
-    stdin_open: true
+      - "1927:1927"
     environment:
       - PORT=1927
       - NODE_ENV=development
       - DOMAIN=localhost:1927/
       - UNIQ_LEN_LINK=7
-    command: npm start
-  postgres:
-    image: postgres:12.11
-    
+      - PG_DB=palugada
+      - PG_USERNAME=postgres
+      - PG_PASSWORD=12345678
+      - PG_HOST=node_db
+    depends_on:
+      - node_db
+
+  node_db:
+    container_name: node_db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=palugada
+    volumes:
+      - nps_data:/var/lib/postgresql/data
+
 volumes:
-  node_modules:
+  nps_data: {}

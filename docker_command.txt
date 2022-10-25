@@ -1,0 +1,7 @@
+docker compose -f docker-compose.yml up
+docker compose -f docker-compose.yml down
+docker image build -t palugada:0.0.1 .
+using docker-compose.yml => docker compose build
+using docker-compose.yml => docker compose up
+using docker-compose.yml => docker compose down
+docker exec -it ID psql -U username dbname

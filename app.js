@@ -12,10 +12,6 @@ require("dotenv").config();
 // Declare app variable to allow in creating other essential functions
 const PORT = process.env.PORT;
 const app = Express();
-const { username, password, database, host, port, dialect, logging } =
-  config.development;
-
-console.log({ username, password, database, host, port, dialect, logging });
 
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));
@@ -34,11 +30,11 @@ const shrinkerRoute = require("./modules/link_shrinker/routers.js");
 app.use("", shrinkerRoute);
 app.use("/api/palugada/shrinker", shrinkerRoute);
 
+const { username, password, database, host } = config.development;
+
 const sequelize = new Sequelize(database, username, password, {
   host,
-  port,
-  dialect,
-  logging,
+  dialect: "postgres",
 });
 
 // Declare a function to check API is online or offline
@@ -52,12 +48,10 @@ app.all("*", (req, res) => {
 });
 
 // Listening port to start the server and connect to database
-app.listen(PORT, async () => {
-  try {
-    console.log("Server start on PORT " + PORT);
-    await sequelize.authenticate();
-    console.log("Connected to DB");
-  } catch (error) {
-    console.error(error);
-  }
-});
+(async () => {
+  await sequelize.sync({ force: false });
+  console.log("Connected to DB");
+
+  app.listen(PORT);
+  console.log("Server start on PORT " + PORT);
+})();
