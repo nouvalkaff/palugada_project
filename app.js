@@ -4,6 +4,7 @@ const Express = require("express");
 // Declare other essential packages
 const Cors = require("cors");
 const { Sequelize } = require("sequelize");
+const config = require("./config/config").config;
 
 // Requiring / importing "dotenv" config to allow access to .env file
 require("dotenv").config();
@@ -11,6 +12,10 @@ require("dotenv").config();
 // Declare app variable to allow in creating other essential functions
 const PORT = process.env.PORT;
 const app = Express();
+const { username, password, database, host, port, dialect, logging } =
+  config.development;
+
+console.log({ username, password, database, host, port, dialect, logging });
 
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));
@@ -29,9 +34,11 @@ const shrinkerRoute = require("./modules/link_shrinker/routers.js");
 app.use("", shrinkerRoute);
 app.use("/api/palugada/shrinker", shrinkerRoute);
 
-const sequelize = new Sequelize("palugada", "postgres", "12345678", {
-  host: "127.0.0.1",
-  dialect: "postgres",
+const sequelize = new Sequelize(database, username, password, {
+  host,
+  port,
+  dialect,
+  logging,
 });
 
 // Declare a function to check API is online or offline

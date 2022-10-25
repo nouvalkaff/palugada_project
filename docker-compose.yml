@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  app:
+    container_name: palugada
+    build: .
+    volumes:
+      - .:/palugada
+      - node_modules:/palugada/node_modules
+    ports:
+      - 1927:1927
+    stdin_open: true
+    environment:
+      - PORT=1927
+      - NODE_ENV=development
+      - DOMAIN=localhost:1927/
+      - UNIQ_LEN_LINK=7
+    command: npm start
+  postgres:
+    image: postgres:12.11
+    
+volumes:
+  node_modules:
