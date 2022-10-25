@@ -50,6 +50,7 @@ app.all("*", (req, res) => {
 // Listening port to start the server and connect to database
 (async () => {
   await sequelize.sync({ force: false });
+  await sequelize.authenticate();
   console.log("Connected to DB");
 
   app.listen(PORT);

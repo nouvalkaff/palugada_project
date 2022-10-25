@@ -4,7 +4,7 @@ exports.config = {
     username: process.env.PG_USERNAME,
     password: +process.env.PG_PASSWORD,
     database: process.env.PG_DB,
-    host: "node_db",
+    host: process.env.PG_HOST,
     logging: false,
     dialect: "postgres",
   },
