@@ -11,6 +11,24 @@ function isMyURLValid(URL) {
   }
 }
 
+async function getAllFromDB() {
+  try {
+    const getAll = await User_URL.findAll({
+      raw: true,
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    let dataArr = getAll.slice();
+    for (let el of dataArr) el.shortURL = DOMAIN + el.uniqchar;
+
+    return dataArr;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function isUniqueCharsExist(uniqChars) {
   try {
     const isExist = await User_URL.findOne({
@@ -23,6 +41,7 @@ async function isUniqueCharsExist(uniqChars) {
 
     if (!isExist) return false;
 
+    // update the hit column whenever the link clicked or accessed
     const queryUpdate = {
       hit: isExist.hit + 1,
     };
@@ -184,4 +203,5 @@ module.exports = {
   saveToDB,
   checkMyUniqChars,
   isUniqueCharsExist,
+  getAllFromDB,
 };

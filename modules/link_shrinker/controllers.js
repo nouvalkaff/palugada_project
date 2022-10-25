@@ -3,8 +3,25 @@ const {
   saveToDB,
   checkMyUniqChars,
   isUniqueCharsExist,
+  getAllFromDB,
 } = require("./helper_function");
 const UNIQ_LEN_LINK = process.env.UNIQ_LEN_LINK;
+
+exports.getAllURLs = async (req, res) => {
+  try {
+    const allData = await getAllFromDB();
+
+    return res.status(200).send({
+      code: 200,
+      codeMessage: "OK",
+      success: true,
+      message: "Succesfully get all data from database",
+      data: allData,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 exports.redirectToRealURL = async (req, res) => {
   try {

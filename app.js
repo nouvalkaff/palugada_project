@@ -32,7 +32,6 @@ app.use("/api/palugada/shrinker", shrinkerRoute);
 const sequelize = new Sequelize("palugada", "postgres", "12345678", {
   host: "127.0.0.1",
   dialect: "postgres",
-  logging: false,
 });
 
 // Declare a function to check API is online or offline

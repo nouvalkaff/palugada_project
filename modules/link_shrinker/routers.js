@@ -1,10 +1,12 @@
 const { Router } = require("express");
 const router = Router();
-const { doItNow, redirectToRealURL } = require("./controllers");
+const { doItNow, redirectToRealURL, getAllURLs } = require("./controllers");
 
 router.post("/doit", doItNow);
 
+router.get("/all", getAllURLs);
+
+// redirect route must be at the very bottom
 router.get("/:id", redirectToRealURL);
-// router.post("/doit", doItNow);
 
 module.exports = router;
