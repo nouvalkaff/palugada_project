@@ -61,9 +61,11 @@ function ShrinkMyLongURLPlease(longURL, length) {
     const urlValid = isMyURLValid(longURL);
     if (urlValid === false) return ["", "", false];
 
+    const totalChars = RANDOM_CHARS.length;
+
     // length of the unique character defined in file .env
     for (let i = 0; i < length; i++) {
-      uniqChar += RANDOM_CHARS[Math.floor(Math.random() * 62)];
+      uniqChar += RANDOM_CHARS[Math.floor(Math.random() * totalChars)];
     }
 
     shortURL += uniqChar;
