@@ -4,7 +4,7 @@ const Express = require("express");
 // Declare other essential packages
 const Cors = require("cors");
 const { Sequelize } = require("sequelize");
-const config = require("./config/config").config;
+const config = require("./config/config.json");
 
 // Requiring / importing "dotenv" config to allow access to .env file
 require("dotenv").config();
@@ -48,11 +48,11 @@ app.all("*", (req, res) => {
 });
 
 // Listening port to start the server and connect to database
-(async () => {
-  await sequelize.sync({ force: false });
-  await sequelize.authenticate();
-  console.log("Connected to DB");
+// await sequelize.sync({ force: false });
 
-  app.listen(PORT);
+app.listen(PORT, async () => {
   console.log("Server start on PORT " + PORT);
-})();
+  await sequelize.sync({ force: false });
+  // await sequelize.authenticate();
+  console.log("Connected to DB");
+});
