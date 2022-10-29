@@ -27,8 +27,11 @@ app.use(Cors({ origin: "*" }));
 
 const shrinkerRoute = require("./modules/link_shrinker/routers.js");
 
+const randGenNumRoute = require("./modules/randGen_Number/routers.js");
+
 app.use("", shrinkerRoute);
 app.use("/api/palugada/shrinker", shrinkerRoute);
+app.use("/api/palugada/rgnum", randGenNumRoute);
 
 const { username, password, database, host } = config.development;
 
@@ -48,11 +51,9 @@ app.all("*", (req, res) => {
 });
 
 // Listening port to start the server and connect to database
-// await sequelize.sync({ force: false });
-
 app.listen(PORT, async () => {
   console.log("Server start on PORT " + PORT);
-  await sequelize.sync({ force: false });
-  // await sequelize.authenticate();
+  // await sequelize.sync({ force: false });
+  await sequelize.authenticate();
   console.log("Connected to DB");
 });

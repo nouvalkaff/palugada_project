@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": 12345678,
     "database": "palugada",
-    "host": "node_db",
+    "host": "localhost",
     "logging": false,
     "dialect": "postgres"
   },
