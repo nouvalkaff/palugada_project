@@ -15,7 +15,7 @@ Fitur tersedia:
    <br />Status: {On working ...}
 
 2. Random Number Generator (Membuat satu set angka secara acak)
-   <br />Ulasan singkat: Butuh array isi angka secara acak secepatnya? Pake Random Number Generator langsuung sat-set.
+   <br />Ulasan singkat: Butuh satu set array atau string isi angka acak secepatnya? Pake Random Number Generator langsuung sat-set.
    <br />Status: {On working ...}
 
 Author: Mohamad Nouval Abdel Alkaf
