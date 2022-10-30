@@ -7,32 +7,51 @@ function generateAnimal(format) {
   sort = sort === "true";
   length = +length;
 
+  if (length > animals.length) return animals.length;
+
   let result = [];
   let resString = "";
 
-  while (result.length < length) {
-    const index = Math.floor(Math.random() * animals.length);
+  if (length < animals.length) {
+    while (result.length < length) {
+      const index = Math.floor(Math.random() * animals.length);
 
-    if (letter === "upper") result.push(animals[index].toUpperCase());
+      if (letter === "upper") result.push(animals[index].toUpperCase());
 
-    if (letter === "lower") result.push(animals[index].toLowerCase());
+      if (letter === "lower") result.push(animals[index].toLowerCase());
 
-    if (letter === "caps") {
-      result.push(
-        animals[index]
-          .toLowerCase()
-          .replace(regexFirstLetter, (caps) => caps.toUpperCase())
-      );
+      if (letter === "caps") {
+        result.push(
+          animals[index]
+            .toLowerCase()
+            .replace(regexFirstLetter, (caps) => caps.toUpperCase())
+        );
+      }
+
+      result = [...new Set(result)];
     }
+  }
 
-    result = [...new Set(result)];
+  if (length === animals.length) {
+    for (let i = 0; i < animals.length; i++) {
+      if (letter === "upper") result.push(animals[i].toUpperCase());
+
+      if (letter === "lower") result.push(animals[i].toLowerCase());
+
+      if (letter === "caps") {
+        result.push(
+          animals[i]
+            .toLowerCase()
+            .replace(regexFirstLetter, (caps) => caps.toUpperCase())
+        );
+      }
+    }
   }
 
   if (arr === false) {
     for (let i = 0; i < result.length; i++) {
-      const el = result[i];
-      if (i === result.length - 1) resString += el;
-      else resString += el + ", ";
+      if (i === result.length - 1) resString += result[i];
+      else resString += result[i] + ", ";
     }
 
     result = resString;

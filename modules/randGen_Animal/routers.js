@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const { genNumber } = require("./controllers");
+const { genAnimal } = require("./controllers");
 
-router.get("/generate", genNumber);
+router.get("/generate", genAnimal);
 
 module.exports = router;
