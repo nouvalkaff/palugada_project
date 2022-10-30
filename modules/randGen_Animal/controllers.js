@@ -2,11 +2,9 @@ const { generateAnimal } = require("./helper_function");
 
 exports.genAnimal = (req, res) => {
   try {
-    let format = req.query;
+    const format = req.query;
 
     const data = generateAnimal(format);
-
-    console.log(data, "data");
 
     if (typeof data === "number") {
       return res.status(400).send({
