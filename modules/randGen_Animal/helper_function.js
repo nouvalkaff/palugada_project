@@ -1,11 +1,19 @@
 const { animals } = require("./animals_name");
 const sorting = require("../general_function_helper");
+const regexGetFirstLetter = /\b\w/g;
+
+const upperMe = (string) => string.toUpperCase();
+const lowerMe = (string) => string.toLowerCase();
+const capsMe = (string) =>
+  string
+    .toLowerCase()
+    .replace(regexGetFirstLetter, (caps) => caps.toUpperCase());
 
 function generateAnimal(format) {
-  let { arr, length, sort, sorttype, letter } = format;
-  const regexFirstLetter = /\b\w/g;
+  let { arr, length, sort, sorttype, letter, duplic } = format;
 
   arr = arr === "true";
+  duplic = duplic === "true";
   sort = sort === "true";
   length = +length;
 
@@ -17,19 +25,13 @@ function generateAnimal(format) {
   while (result.length < length) {
     const index = Math.floor(Math.random() * animals.length);
 
-    if (letter === "upper") result.push(animals[index].toUpperCase());
+    if (letter === "upper") result.push(upperMe(animals[index]));
 
-    if (letter === "lower") result.push(animals[index].toLowerCase());
+    if (letter === "lower") result.push(lowerMe(animals[index]));
 
-    if (letter === "caps") {
-      result.push(
-        animals[index]
-          .toLowerCase()
-          .replace(regexFirstLetter, (caps) => caps.toUpperCase())
-      );
-    }
+    if (letter === "caps") result.push(capsMe(animals[index]));
 
-    result = [...new Set(result)];
+    if (duplic === false) result = [...new Set(result)];
   }
 
   if (sort === true) result = sorting(sorttype, result);
