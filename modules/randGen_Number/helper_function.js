@@ -1,4 +1,4 @@
-const sorting = require("../general_function_helper");
+const { sorting, array2string } = require("../general_function_helper");
 
 const generateNumber = (format) => {
   try {
@@ -35,14 +35,7 @@ const generateNumber = (format) => {
 
       if (sort === true) {
         result = sorting(sorttype, result);
-
-        for (let i = 0; i < length; i++) {
-          const eachNo = result[i];
-          if (i === length - 1) resString += eachNo;
-          else resString += eachNo + ", ";
-        }
-
-        result = resString;
+        result = array2string(result.length, result);
       }
     }
 

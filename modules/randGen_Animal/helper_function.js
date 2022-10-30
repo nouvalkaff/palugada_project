@@ -1,26 +1,30 @@
-const { animals } = require("./animals_name");
-const sorting = require("../general_function_helper");
-const regexGetFirstLetter = /\b\w/g;
-
-const upperMe = (string) => string.toUpperCase();
-const lowerMe = (string) => string.toLowerCase();
-const capsMe = (string) =>
-  string
-    .toLowerCase()
-    .replace(regexGetFirstLetter, (caps) => caps.toUpperCase());
+const animals_en = require("./animals_name_en").animals;
+const animals_id = require("./animals_name_id").animals;
+const {
+  sorting,
+  upperMe,
+  lowerMe,
+  capsMe,
+  removeDuplicate,
+  array2string,
+} = require("../general_function_helper");
 
 function generateAnimal(format) {
-  let { arr, length, sort, sorttype, letter, duplic } = format;
+  let { arr, length, sort, sorttype, letter, allowduplic, language } = format;
 
   arr = arr === "true";
-  duplic = duplic === "true";
+  allowduplic = allowduplic === "true";
   sort = sort === "true";
   length = +length;
+
+  let animals;
+
+  if (language === "id") animals = animals_id;
+  else if (language === "en") animals = animals_en;
 
   if (length > animals.length) return animals.length;
 
   let result = [];
-  let resString = "";
 
   while (result.length < length) {
     const index = Math.floor(Math.random() * animals.length);
@@ -31,19 +35,12 @@ function generateAnimal(format) {
 
     if (letter === "caps") result.push(capsMe(animals[index]));
 
-    if (duplic === false) result = [...new Set(result)];
+    if (allowduplic === false) result = removeDuplicate(result);
   }
 
   if (sort === true) result = sorting(sorttype, result);
 
-  if (arr === false) {
-    for (let i = 0; i < result.length; i++) {
-      if (i === result.length - 1) resString += result[i];
-      else resString += result[i] + ", ";
-    }
-
-    result = resString;
-  }
+  if (arr === false) result = array2string(result.length, result);
 
   return result;
 }

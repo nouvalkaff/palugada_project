@@ -1,3 +1,25 @@
+const regexGetFirstLetter = /\b\w/g;
+
+const upperMe = (string) => string.toUpperCase();
+
+const lowerMe = (string) => string.toLowerCase();
+
+const capsMe = (string) =>
+  string
+    .toLowerCase()
+    .replace(regexGetFirstLetter, (caps) => caps.toUpperCase());
+
+const removeDuplicate = (array) => [...new Set(array)];
+
+function array2string(length, array) {
+  let resString = "";
+  for (let i = 0; i < length; i++) {
+    if (i === length - 1) resString += array[i];
+    else resString += array[i] + ", ";
+  }
+  return resString;
+}
+
 function sorting(sorttype, number_arr) {
   try {
     return sorttype === "ASC"
@@ -42,4 +64,11 @@ function quickSortDESC(data) {
   return [...quickSortDESC(leftArr), pivot, ...quickSortDESC(rightArr)];
 }
 
-module.exports = sorting;
+module.exports = {
+  sorting,
+  upperMe,
+  lowerMe,
+  capsMe,
+  removeDuplicate,
+  array2string,
+};
