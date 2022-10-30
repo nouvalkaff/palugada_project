@@ -26,12 +26,13 @@ app.use(Express.urlencoded({ extended: false }));
 app.use(Cors({ origin: "*" }));
 
 const shrinkerRoute = require("./modules/link_shrinker/routers.js");
-
 const randGenNumRoute = require("./modules/randGen_Number/routers.js");
+const randGenAniRoute = require("./modules/randGen_Animal/routers.js");
 
 app.use("", shrinkerRoute);
 app.use("/api/palugada/shrinker", shrinkerRoute);
 app.use("/api/palugada/rgnum", randGenNumRoute);
+app.use("/api/palugada/rgani", randGenAniRoute);
 
 const { username, password, database, host } = config.development;
 
