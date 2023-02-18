@@ -1,6 +1,6 @@
-const { User_URL } = require("../../models");
+const { User_URL } = require('../../models');
 const DOMAIN = process.env.DOMAIN;
-const URL_PKG = require("url").URL;
+const URL_PKG = require('url').URL;
 
 function isMyURLValid(URL) {
   try {
@@ -16,7 +16,7 @@ async function getAllFromDB() {
     const getAll = await User_URL.findAll({
       raw: true,
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ['createdAt', 'updatedAt'],
       },
     });
 
@@ -35,7 +35,7 @@ async function isUniqueCharsExist(uniqChars) {
       where: { uniqchar: uniqChars },
       raw: true,
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ['createdAt', 'updatedAt'],
       },
     });
 
@@ -55,11 +55,11 @@ async function isUniqueCharsExist(uniqChars) {
 
 function ShrinkMyLongURLPlease(longURL, length) {
   try {
-    let uniqChar = "";
+    let uniqChar = '';
     let shortURL = DOMAIN;
 
     const urlValid = isMyURLValid(longURL);
-    if (urlValid === false) return ["", "", false];
+    if (urlValid === false) return ['', '', false];
 
     const totalChars = RANDOM_CHARS.length;
 
@@ -87,7 +87,7 @@ async function checkMyUniqChars(
       where: { uniqchar: uniqueCharacters },
       raw: true,
       attributes: {
-        exclude: ["original", "hit", "createdAt", "updatedAt"],
+        exclude: ['original', 'hit', 'createdAt', 'updatedAt'],
       },
     });
 
@@ -146,58 +146,58 @@ const RANDOM_CHARS = [
   7,
   8,
   9,
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
 ];
 
 module.exports = {

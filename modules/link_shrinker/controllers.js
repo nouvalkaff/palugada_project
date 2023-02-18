@@ -4,7 +4,7 @@ const {
   checkMyUniqChars,
   isUniqueCharsExist,
   getAllFromDB,
-} = require("./helper_function");
+} = require('./helper_function');
 const UNIQ_LEN_LINK = process.env.UNIQ_LEN_LINK;
 
 exports.getAllURLs = async (req, res) => {
@@ -13,9 +13,9 @@ exports.getAllURLs = async (req, res) => {
 
     return res.status(200).send({
       code: 200,
-      codeMessage: "OK",
+      codeMessage: 'OK',
       success: true,
-      message: "Succesfully get all data from database",
+      message: 'Succesfully get all data from database',
       data: allData,
     });
   } catch (error) {
@@ -32,9 +32,9 @@ exports.redirectToRealURL = async (req, res) => {
     if (!isExist) {
       return res.status(400).send({
         code: 400,
-        codeMessage: "Bad Request",
+        codeMessage: 'Bad Request',
         success: false,
-        message: "Set of unique characters that you search is not exist",
+        message: 'Set of unique characters that you search is not exist',
       });
     }
 
@@ -56,26 +56,28 @@ exports.doItNow = async (req, res) => {
     if (!longURL) {
       return res.status(400).send({
         code: 400,
-        codeMessage: "Bad Request",
+        codeMessage: 'Bad Request',
         success: false,
-        message: "Field url_ori cannot be empty or undefined",
+        message: 'Field url_ori cannot be empty or undefined',
       });
     }
 
     /**
      * shrinkedURL = [ '5JwbK7W', 'localhost:1927/5JwbK7W', true ]
-     * shrinkedURL[0] = unique chars
-     * shrinkedURL[1] = domain + unique chars
-     * shrinkedURL[2] = status function
+     * uniqueChars = unique chars
+     * [1] = domain + unique chars
+     * status = status function
      */
     const shrinkedURL = ShrinkMyLongURLPlease(longURL, UNIQ_LEN_LINK);
 
-    if (shrinkedURL[2] === false) {
+    const [uniqueChars, , status] = shrinkedURL;
+
+    if (status === false) {
       return res.status(400).send({
         code: 400,
-        codeMessage: "Bad Request",
+        codeMessage: 'Bad Request',
         success: false,
-        message: "URL is not valid. Please input the valid URL.",
+        message: 'URL is not valid. Please input the valid URL.',
       });
     }
 
@@ -83,7 +85,7 @@ exports.doItNow = async (req, res) => {
     const uniqueCharsChecker = await checkMyUniqChars(
       longURL,
       UNIQ_LEN_LINK,
-      shrinkedURL[0],
+      uniqueChars,
       shrinkedURL
     );
 
@@ -93,9 +95,9 @@ exports.doItNow = async (req, res) => {
       if (savedData) {
         return res.status(200).send({
           code: 200,
-          codeMessage: "OK",
+          codeMessage: 'OK',
           success: true,
-          message: "Here is your new short URL",
+          message: 'Here is your new short URL',
           urlOri: longURL,
           urlShrinked: uniqueCharsChecker[1],
         });
@@ -105,7 +107,7 @@ exports.doItNow = async (req, res) => {
     console.error(error);
     return res.status(500).send({
       code: 500,
-      codeMessage: "Internal Server Error",
+      codeMessage: 'Internal Server Error',
       success: false,
     });
   }
