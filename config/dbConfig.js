@@ -4,7 +4,7 @@ const DBConfig = {
     password: process.env.DEV_PASSWORD,
     database: process.env.DEV_DATABASE,
     host: process.env.DEV_HOST,
-    dialect: process.env.DEV_DIALECT,
+    dialect: process.env.DEV_DIALECT
   },
   test: {
     username: 'root',
@@ -12,7 +12,7 @@ const DBConfig = {
     database: 'database_test',
     host: 'localhost',
     logging: false,
-    dialect: 'postgres',
+    dialect: 'postgres'
   },
   production: {
     username: 'root',
@@ -20,8 +20,8 @@ const DBConfig = {
     database: 'database_production',
     host: 'localhost',
     logging: false,
-    dialect: 'postgres',
-  },
+    dialect: 'postgres'
+  }
 };
 
 module.exports = DBConfig;

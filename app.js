@@ -5,13 +5,13 @@ require('dotenv').config();
 const Express = require('express');
 
 // Declare other essential packages
+const { Client } = require('pg');
 const Cors = require('cors');
-const { Sequelize } = require('sequelize');
 const DBConfig = require('./config/dbConfig');
 const config = DBConfig;
 
 // Declare app variable to allow in creating other essential functions
-const PORT = process.env.PORT;
+const port = process.env.DEV_PORT;
 const app = Express();
 
 app.use(Express.json());
@@ -35,29 +35,39 @@ app.use('/api/palugada/shrinker', shrinkerRoute);
 app.use('/api/palugada/rgnum', randGenNumRoute);
 app.use('/api/palugada/rgani', randGenAniRoute);
 
-const { username, password, database, host, dialect } =
-  config[process.env.NODE_ENV];
+const {
+  username: user,
+  password,
+  database,
+  host
+} = config[process.env.NODE_ENV];
 
-const sequelize = new Sequelize(database, username, password, {
-  logging: false,
-  host,
-  dialect,
-});
+const client = new Client({ user, password, host, database });
+
+// Calling client.connect with promise
+client
+  .connect()
+  .then(() => {
+    console.log('DB connected and server start on ' + port);
+  })
+  .catch((error) => {
+    client
+      .end()
+      .then(() => console.log('client has disconnected'))
+      .catch((error) =>
+        console.error('error during disconnection', error.stack)
+      );
+    console.error('connection error ->', error.stack);
+  });
 
 // Declare a function to check API is online or offline
-app.all('*', (req, res) => {
+app.all('*', (_, res) => {
   return res.status(200).send({
     code: 200,
     statustext: 'OK',
     success: true,
-    message: 'Welcome to API PALUGADA a project by Mohamad Nouval Abdel Alkaf',
+    message: 'Welcome to API PALUGADA a project by Mohamad Nouval Abdel Alkaf'
   });
 });
 
-// Listening port to start the server and connect to database
-app.listen(PORT, async () => {
-  console.log('Server start on PORT ' + PORT);
-  // await sequelize.sync({ force: false });
-  await sequelize.authenticate();
-  console.log('Connected to DB');
-});
+app.listen(port);

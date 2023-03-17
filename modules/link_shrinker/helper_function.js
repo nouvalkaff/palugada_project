@@ -1,4 +1,4 @@
-const { User_URL } = require('../../models');
+// const { User_URL } = require('../../models');
 const DOMAIN = process.env.DOMAIN;
 const URL_PKG = require('url').URL;
 
@@ -16,8 +16,8 @@ async function getAllFromDB() {
     const getAll = await User_URL.findAll({
       raw: true,
       attributes: {
-        exclude: ['createdAt', 'updatedAt'],
-      },
+        exclude: ['createdAt', 'updatedAt']
+      }
     });
 
     let dataArr = getAll.slice();
@@ -35,15 +35,15 @@ async function isUniqueCharsExist(uniqChars) {
       where: { uniqchar: uniqChars },
       raw: true,
       attributes: {
-        exclude: ['createdAt', 'updatedAt'],
-      },
+        exclude: ['createdAt', 'updatedAt']
+      }
     });
 
     if (!isExist) return false;
 
     // update the hit column whenever the link clicked or accessed
     const queryUpdate = {
-      hit: isExist.hit + 1,
+      hit: isExist.hit + 1
     };
 
     await User_URL.update(queryUpdate, { where: { uniqchar: uniqChars } });
@@ -87,8 +87,8 @@ async function checkMyUniqChars(
       where: { uniqchar: uniqueCharacters },
       raw: true,
       attributes: {
-        exclude: ['original', 'hit', 'createdAt', 'updatedAt'],
-      },
+        exclude: ['original', 'hit', 'createdAt', 'updatedAt']
+      }
     });
 
     if (isDuplicate !== null) {
@@ -116,7 +116,7 @@ async function saveToDB(longURL, uniqueChars) {
     let data = {
       original: longURL,
       uniqchar: uniqueChars,
-      hit: 0,
+      hit: 0
     };
 
     // Create data to database
@@ -197,7 +197,7 @@ const RANDOM_CHARS = [
   'w',
   'x',
   'y',
-  'z',
+  'z'
 ];
 
 module.exports = {
@@ -205,5 +205,5 @@ module.exports = {
   saveToDB,
   checkMyUniqChars,
   isUniqueCharsExist,
-  getAllFromDB,
+  getAllFromDB
 };
