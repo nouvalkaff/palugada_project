@@ -5,13 +5,11 @@ require('dotenv').config();
 const Express = require('express');
 
 // Declare other essential packages
-const { Client } = require('pg');
 const Cors = require('cors');
-const DBConfig = require('./config/dbConfig');
-const config = DBConfig;
+const connection = require('./database/connection');
+const port = process.env.DEV_PORT;
 
 // Declare app variable to allow in creating other essential functions
-const port = process.env.DEV_PORT;
 const app = Express();
 
 app.use(Express.json());
@@ -34,31 +32,6 @@ app.use('', shrinkerRoute);
 app.use('/api/palugada/shrinker', shrinkerRoute);
 app.use('/api/palugada/rgnum', randGenNumRoute);
 app.use('/api/palugada/rgani', randGenAniRoute);
-
-const {
-  username: user,
-  password,
-  database,
-  host
-} = config[process.env.NODE_ENV];
-
-const client = new Client({ user, password, host, database });
-
-// Calling client.connect with promise
-client
-  .connect()
-  .then(() => {
-    console.log('DB connected and server start on ' + port);
-  })
-  .catch((error) => {
-    client
-      .end()
-      .then(() => console.log('client has disconnected'))
-      .catch((error) =>
-        console.error('error during disconnection', error.stack)
-      );
-    console.error('connection error ->', error.stack);
-  });
 
 // Declare a function to check API is online or offline
 app.all('*', (_, res) => {

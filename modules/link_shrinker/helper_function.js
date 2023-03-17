@@ -1,4 +1,4 @@
-// const { User_URL } = require('../../models');
+const { shrinkUrl } = require('../../database/executor');
 const DOMAIN = process.env.DOMAIN;
 const URL_PKG = require('url').URL;
 
@@ -13,17 +13,9 @@ function isMyURLValid(URL) {
 
 async function getAllFromDB() {
   try {
-    const getAll = await User_URL.findAll({
-      raw: true,
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      }
-    });
-
-    let dataArr = getAll.slice();
-    for (let el of dataArr) el.shortURL = DOMAIN + el.uniqchar;
-
-    return dataArr;
+    const getAllFromTableShrinkUrl = await shrinkUrl.getAllTableShrinkUrl();
+    console.log(getAllFromTableShrinkUrl, 'getAllFromTableShrinkUrl');
+    return getAllFromTableShrinkUrl;
   } catch (error) {
     console.error(error);
   }

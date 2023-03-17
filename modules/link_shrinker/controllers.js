@@ -3,7 +3,7 @@ const {
   saveToDB,
   checkMyUniqChars,
   isUniqueCharsExist,
-  getAllFromDB,
+  getAllFromDB
 } = require('./helper_function');
 const UNIQ_LEN_LINK = process.env.UNIQ_LEN_LINK;
 
@@ -16,7 +16,7 @@ exports.getAllURLs = async (req, res) => {
       codeMessage: 'OK',
       success: true,
       message: 'Succesfully get all data from database',
-      data: allData,
+      data: allData
     });
   } catch (error) {
     console.error(error);
@@ -34,13 +34,13 @@ exports.redirectToRealURL = async (req, res) => {
         code: 400,
         codeMessage: 'Bad Request',
         success: false,
-        message: 'Set of unique characters that you search is not exist',
+        message: 'Set of unique characters that you search is not exist'
       });
     }
 
     return res
       .writeHead(301, {
-        Location: isExist.original,
+        Location: isExist.original
       })
       .end();
   } catch (error) {
@@ -58,7 +58,7 @@ exports.doItNow = async (req, res) => {
         code: 400,
         codeMessage: 'Bad Request',
         success: false,
-        message: 'Field url_ori cannot be empty or undefined',
+        message: 'Field url_ori cannot be empty or undefined'
       });
     }
 
@@ -77,7 +77,7 @@ exports.doItNow = async (req, res) => {
         code: 400,
         codeMessage: 'Bad Request',
         success: false,
-        message: 'URL is not valid. Please input the valid URL.',
+        message: 'URL is not valid. Please input the valid URL.'
       });
     }
 
@@ -99,7 +99,7 @@ exports.doItNow = async (req, res) => {
           success: true,
           message: 'Here is your new short URL',
           urlOri: longURL,
-          urlShrinked: uniqueCharsChecker[1],
+          urlShrinked: uniqueCharsChecker[1]
         });
       }
     }
@@ -108,7 +108,7 @@ exports.doItNow = async (req, res) => {
     return res.status(500).send({
       code: 500,
       codeMessage: 'Internal Server Error',
-      success: false,
+      success: false
     });
   }
 };
