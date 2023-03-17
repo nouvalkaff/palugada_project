@@ -6,3 +6,5 @@ CREATE TABLE IF NOT EXISTS shrinkurl (
     createdAt timestamptz DEFAULT CURRENT_TIMESTAMP,
     updatedAt timestamptz NULL
 );
+
+CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);

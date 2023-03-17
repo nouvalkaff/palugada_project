@@ -1,12 +1,14 @@
+const URL_PKG = require('url').URL;
+const isEmpty = require('lodash/isEmpty');
+const { RANDOM_CHARS } = require('../../constant/urlShrinker');
 const { shrinkUrl } = require('../../database/executor');
 const DOMAIN = process.env.DOMAIN;
-const URL_PKG = require('url').URL;
 
 function isMyURLValid(URL) {
   try {
     const checkMyURL = new URL_PKG(URL);
-    if (checkMyURL) return true;
-  } catch (err) {
+    if (URL === checkMyURL.href) return true;
+  } catch (error) {
     return false;
   }
 }
@@ -24,9 +26,7 @@ async function isUniqueCharsExist(uniqChars) {
     if (!isExist) return false;
 
     // update the hit column whenever the link clicked or accessed
-    const queryUpdate = {
-      hit: isExist.hit + 1
-    };
+    const queryUpdate = { hit: isExist.hit + 1 };
 
     await User_URL.update(queryUpdate, { where: { uniqchar: uniqChars } });
     return isExist;
@@ -37,21 +37,18 @@ async function isUniqueCharsExist(uniqChars) {
 
 function ShrinkMyLongURLPlease(longURL, length) {
   try {
-    let uniqChar = '';
-    let shortURL = DOMAIN;
-
     const urlValid = isMyURLValid(longURL);
     if (urlValid === false) return ['', '', false];
 
-    const totalChars = RANDOM_CHARS.length;
+    let uniqChar = '';
+    let shortURL = DOMAIN;
 
-    // length of the unique character defined in file .env
+    const totalChars = RANDOM_CHARS.length;
     for (let i = 0; i < length; i++) {
       uniqChar += RANDOM_CHARS[Math.floor(Math.random() * totalChars)];
     }
 
     shortURL += uniqChar;
-
     return [uniqChar, shortURL, true];
   } catch (error) {
     console.error(error);
@@ -60,50 +57,33 @@ function ShrinkMyLongURLPlease(longURL, length) {
 
 async function checkMyUniqChars(
   longURL,
-  UNIQ_LEN_LINK,
+  uniqueCharLength,
   uniqueCharacters,
   urlArray
 ) {
-  try {
-    let isDuplicate = await User_URL.findOne({
-      where: { uniqchar: uniqueCharacters },
-      raw: true,
-      attributes: {
-        exclude: ['original', 'hit', 'createdAt', 'updatedAt']
-      }
-    });
+  let isDuplicate = await shrinkUrl.isUniqueCharsExist(uniqueCharacters);
+  if (isEmpty(isDuplicate)) return urlArray;
 
-    if (isDuplicate !== null) {
-      const shrinkedAgain = ShrinkMyLongURLPlease(longURL, UNIQ_LEN_LINK);
-      const newUniqChars = shrinkedAgain[0];
+  const shrinkedAgain = ShrinkMyLongURLPlease(longURL, uniqueCharLength);
+  const [newUniqChars] = shrinkedAgain;
 
-      // return recursive until get a new unique set of chars
-      // ALWAYS RETURNED RECUSIVE OR YOU WILL GET UNDEFINED
-      return await checkMyUniqChars(
-        longURL,
-        UNIQ_LEN_LINK,
-        newUniqChars,
-        shrinkedAgain
-      );
-    }
-
-    if (isDuplicate === null) return urlArray;
-  } catch (error) {
-    console.error(error);
-  }
+  // return recursive until get a new unique set of chars
+  // ALWAYS RETURNED RECUSIVE OR YOU WILL GET UNDEFINED
+  return await checkMyUniqChars(
+    longURL,
+    uniqueCharLength,
+    newUniqChars,
+    shrinkedAgain
+  );
 }
 
 async function saveToDB(longURL, uniqueChars) {
   try {
-    let data = {
-      original: longURL,
-      uniqchar: uniqueChars,
+    await shrinkUrl.saveDataToDB({
+      originalLink: longURL,
+      uniqueChar: uniqueChars,
       hit: 0
-    };
-
-    // Create data to database
-    await User_URL.create(data);
-
+    });
     return true;
   } catch (error) {
     console.error(error);
@@ -111,80 +91,14 @@ async function saveToDB(longURL, uniqueChars) {
   }
 }
 
-// function getRandomInt(min, max) {
-//   min = Math.ceil(min);
-//   max = Math.floor(max);
-//   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-// }
-
-const RANDOM_CHARS = [
-  0,
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'H',
-  'I',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
-  'Z',
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z'
-];
+async function getAllData() {
+  return shrinkUrl.getAllDataFromShrinkURL();
+}
 
 module.exports = {
   ShrinkMyLongURLPlease,
   saveToDB,
   checkMyUniqChars,
-  isUniqueCharsExist
+  isUniqueCharsExist,
+  getAllData
 };
