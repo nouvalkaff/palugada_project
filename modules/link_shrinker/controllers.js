@@ -2,15 +2,14 @@ const {
   ShrinkMyLongURLPlease,
   saveToDB,
   checkMyUniqChars,
-  isUniqueCharsExist,
-  getAllFromDB
+  isUniqueCharsExist
 } = require('./helper_function');
-const UNIQ_LEN_LINK = process.env.UNIQ_LEN_LINK;
+const { shrinkUrl } = require('../../database/executor');
+const CHAR_LENGTH = process.env.CHAR_LENGTH;
 
 exports.getAllURLs = async (req, res) => {
   try {
-    const allData = await getAllFromDB();
-
+    const allData = await shrinkUrl.getAllDataFromShrinkURL();
     return res.status(200).send({
       code: 200,
       codeMessage: 'OK',
@@ -48,9 +47,9 @@ exports.redirectToRealURL = async (req, res) => {
   }
 };
 
-exports.doItNow = async (req, res) => {
+exports.shrinkTheURL = async (req, res) => {
   try {
-    const longURL = req.query.url_ori;
+    const longURL = req.query.url;
 
     // field url_ori cannot be empty or undefined
     if (!longURL) {
@@ -58,7 +57,7 @@ exports.doItNow = async (req, res) => {
         code: 400,
         codeMessage: 'Bad Request',
         success: false,
-        message: 'Field url_ori cannot be empty or undefined'
+        message: 'Field url cannot be empty or undefined'
       });
     }
 
@@ -68,7 +67,7 @@ exports.doItNow = async (req, res) => {
      * [1] = domain + unique chars
      * status = status function
      */
-    const shrinkedURL = ShrinkMyLongURLPlease(longURL, UNIQ_LEN_LINK);
+    const shrinkedURL = ShrinkMyLongURLPlease(longURL, CHAR_LENGTH);
 
     const [uniqueChars, , status] = shrinkedURL;
 
@@ -84,7 +83,7 @@ exports.doItNow = async (req, res) => {
     // below is a function to check the unique characters already exist or not
     const uniqueCharsChecker = await checkMyUniqChars(
       longURL,
-      UNIQ_LEN_LINK,
+      CHAR_LENGTH,
       uniqueChars,
       shrinkedURL
     );

@@ -13,20 +13,17 @@ const {
 
 const client = new Client({ user, password, host, database });
 
-// Calling client.connect with promise
-client
-  .connect()
-  .then(() => {
+const connection = async () => {
+  try {
+    await client.connect();
     console.log('DB connected and server start on ' + port);
-  })
-  .catch((error) => {
-    client
-      .end()
-      .then(() => console.log('client has disconnected'))
-      .catch((error) =>
-        console.error('error during disconnection', error.stack)
-      );
+  } catch (error) {
+    client.end((err) => {
+      if (err) console.error('error during disconnection', err.stack);
+      console.log('client has disconnected');
+    });
     console.error('connection error', error.stack);
-  });
+  }
+};
 
-module.exports = client;
+module.exports = { connection, client };

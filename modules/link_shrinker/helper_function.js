@@ -11,16 +11,6 @@ function isMyURLValid(URL) {
   }
 }
 
-async function getAllFromDB() {
-  try {
-    const getAllFromTableShrinkUrl = await shrinkUrl.getAllTableShrinkUrl();
-    console.log(getAllFromTableShrinkUrl, 'getAllFromTableShrinkUrl');
-    return getAllFromTableShrinkUrl;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 async function isUniqueCharsExist(uniqChars) {
   try {
     const isExist = await User_URL.findOne({
@@ -196,6 +186,5 @@ module.exports = {
   ShrinkMyLongURLPlease,
   saveToDB,
   checkMyUniqChars,
-  isUniqueCharsExist,
-  getAllFromDB
+  isUniqueCharsExist
 };

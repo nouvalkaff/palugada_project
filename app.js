@@ -6,11 +6,11 @@ const Express = require('express');
 
 // Declare other essential packages
 const Cors = require('cors');
-const connection = require('./database/connection');
 const port = process.env.DEV_PORT;
 
 // Declare app variable to allow in creating other essential functions
 const app = Express();
+const { connection } = require('./database/connection');
 
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));
@@ -43,4 +43,5 @@ app.all('*', (_, res) => {
   });
 });
 
+connection();
 app.listen(port);

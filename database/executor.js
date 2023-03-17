@@ -1,13 +1,14 @@
-const client = require('./connection');
+const { client } = require('./connection');
 
-const getAllTableShrinkUrl = async () => {
+const getAllDataFromShrinkURL = async () => {
   const query = 'SELECT * FROM shrinkurl';
   const executeQuery = await client.query(query);
-  return executeQuery;
+  const { rows } = executeQuery;
+  return rows;
 };
 
 module.exports = {
   shrinkUrl: {
-    getAllTableShrinkUrl
+    getAllDataFromShrinkURL
   }
 };
