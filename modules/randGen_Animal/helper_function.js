@@ -55,11 +55,14 @@ const getNewAnimals = (animals, resultFromGenerate, totalNeeded) => {
 };
 
 const handleDuplicate = (resultFromGenerate, fullAnimals) => {
-  const myArray = [...resultFromGenerate, resultFromGenerate[0]];
-  const totalDuplicate = findDuplicates(myArray).length;
-  if (totalDuplicate === 0) return myArray;
-  const newAnimals = getNewAnimals(fullAnimals, myArray, totalDuplicate);
-  return [...new Set(myArray), ...newAnimals];
+  const totalDuplicate = findDuplicates(resultFromGenerate).length;
+  if (totalDuplicate === 0) return resultFromGenerate;
+  const newAnimals = getNewAnimals(
+    fullAnimals,
+    resultFromGenerate,
+    totalDuplicate
+  );
+  return [...new Set(resultFromGenerate), ...newAnimals];
 };
 
 module.exports = { generateAnimal };
