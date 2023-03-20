@@ -25,7 +25,6 @@ exports.getAllURLs = async (_, res) => {
 exports.redirectToRealURL = async (req, res) => {
   try {
     const uniqChars = req.params.id;
-
     const isExist = await isUniqueCharsExist(uniqChars);
 
     if (!isExist) {
@@ -37,13 +36,17 @@ exports.redirectToRealURL = async (req, res) => {
       });
     }
 
-    return res
-      .writeHead(301, {
-        Location: isExist.original
-      })
-      .end();
+    const [data] = isExist;
+    const { originallink } = data;
+    return res.writeHead(301, { Location: originallink }).end();
   } catch (error) {
     console.error(error);
+    return res.status(500).send({
+      code: 500,
+      codeMessage: 'Internal Server Error',
+      success: false,
+      message: error.message
+    });
   }
 };
 

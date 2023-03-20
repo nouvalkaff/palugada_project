@@ -7,9 +7,9 @@ const getAllDataFromShrinkURL = async () => {
   return rows;
 };
 
-const isUniqueCharsExist = async (uniqueChar) => {
+const isUnixCharactersExist = async (uniqueChar) => {
   const query =
-    'SELECT uniqueChar FROM shrinkurl WHERE uniqueChar = $1 LIMIT 1;';
+    'SELECT originallink, uniqueChar, hit FROM shrinkurl WHERE uniqueChar = $1 LIMIT 1;';
   const params = [uniqueChar];
   const executeQuery = await client.query(query, params);
   const { rows } = executeQuery;
@@ -24,10 +24,18 @@ const saveDataToDB = async (data) => {
   return client.query(query, params);
 };
 
+const updateHitUniqueCharacter = async (data) => {
+  const { uniquechar, hit } = data;
+  const query = 'UPDATE shrinkurl SET hit = $1 WHERE uniquechar = $2;';
+  const params = [hit, uniquechar];
+  return client.query(query, params);
+};
+
 module.exports = {
   shrinkUrl: {
     getAllDataFromShrinkURL,
-    isUniqueCharsExist,
-    saveDataToDB
+    isUnixCharactersExist,
+    saveDataToDB,
+    updateHitUniqueCharacter
   }
 };

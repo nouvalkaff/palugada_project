@@ -14,25 +14,16 @@ function isMyURLValid(URL) {
 }
 
 async function isUniqueCharsExist(uniqChars) {
-  try {
-    const isExist = await User_URL.findOne({
-      where: { uniqchar: uniqChars },
-      raw: true,
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      }
-    });
+  const isExist = await shrinkUrl.isUnixCharactersExist(uniqChars);
+  if (isEmpty(isExist)) return false;
+  const [dataFromDB] = isExist;
+  const { uniquechar, hit } = dataFromDB;
 
-    if (!isExist) return false;
+  // update the hit column whenever the link clicked or accessed
+  const queryUpdate = { uniquechar, hit: hit + 1 };
 
-    // update the hit column whenever the link clicked or accessed
-    const queryUpdate = { hit: isExist.hit + 1 };
-
-    await User_URL.update(queryUpdate, { where: { uniqchar: uniqChars } });
-    return isExist;
-  } catch (error) {
-    console.error(error);
-  }
+  await shrinkUrl.updateHitUniqueCharacter(queryUpdate);
+  return isExist;
 }
 
 function ShrinkMyLongURLPlease(longURL, length) {
