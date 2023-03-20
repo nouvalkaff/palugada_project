@@ -12,7 +12,6 @@ const capsMe = (string) =>
 const array2string = (array) => String(array).replace(/\,/g, ', ');
 
 function sorting(sorttype, dataInArray) {
-  console.log(dataInArray, 'dataInArray');
   return sorttype === 'ASC'
     ? quickSortASC(dataInArray)
     : quickSortDESC(dataInArray);
