@@ -1,4 +1,3 @@
-const isEmpty = require('lodash/isEmpty');
 const animals_en = require('./animals_name_en').animals;
 const animals_id = require('./animals_name_id').animals;
 const {
@@ -6,7 +5,8 @@ const {
   upperMe,
   lowerMe,
   capsMe,
-  array2string
+  array2string,
+  handleDuplicate
 } = require('../general_function_helper');
 
 function generateAnimal(format) {
@@ -37,32 +37,5 @@ function generateAnimal(format) {
   if (arr === 0) result = array2string(result.length, result);
   return result;
 }
-
-const findDuplicates = (arr) => {
-  return arr.filter((item, index) => arr.indexOf(item) !== index);
-};
-
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-const getNewAnimals = (animals, resultFromGenerate, totalNeeded) => {
-  const filteredAnimalData = animals.filter(
-    (animal) => !resultFromGenerate.includes(animal)
-  );
-  const randomizedNewAnimal = shuffle(filteredAnimalData);
-  return randomizedNewAnimal.slice(0, totalNeeded);
-};
-
-const handleDuplicate = (resultFromGenerate, fullAnimals) => {
-  const totalDuplicate = findDuplicates(resultFromGenerate).length;
-  if (totalDuplicate === 0) return resultFromGenerate;
-  const newAnimals = getNewAnimals(
-    fullAnimals,
-    resultFromGenerate,
-    totalDuplicate
-  );
-  return [...new Set(resultFromGenerate), ...newAnimals];
-};
 
 module.exports = { generateAnimal };

@@ -9,23 +9,13 @@ const capsMe = (string) =>
     .toLowerCase()
     .replace(regexGetFirstLetter, (caps) => caps.toUpperCase());
 
-function array2string(length, array) {
-  let resString = '';
-  for (let i = 0; i < length; i++) {
-    if (i === length - 1) resString += array[i];
-    else resString += array[i] + ', ';
-  }
-  return resString;
-}
+const array2string = (array) => String(array).replace(/\,/g, ', ');
 
-function sorting(sorttype, number_arr) {
-  try {
-    return sorttype === 'ASC'
-      ? quickSortASC(number_arr)
-      : quickSortDESC(number_arr);
-  } catch (error) {
-    console.error(error);
-  }
+function sorting(sorttype, dataInArray) {
+  console.log(dataInArray, 'dataInArray');
+  return sorttype === 'ASC'
+    ? quickSortASC(dataInArray)
+    : quickSortDESC(dataInArray);
 }
 
 function quickSortASC(data) {
@@ -62,10 +52,42 @@ function quickSortDESC(data) {
   return [...quickSortDESC(leftArr), pivot, ...quickSortDESC(rightArr)];
 }
 
+const findDuplicates = (arr) => {
+  return arr.filter((item, index) => arr.indexOf(item) !== index);
+};
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+const getNewData = (fullArrayInput, resultFromGenerate, totalNeeded) => {
+  const filteredAnimalData = fullArrayInput.filter(
+    (animal) => !resultFromGenerate.includes(animal)
+  );
+  const randomizedNewAnimal = shuffle(filteredAnimalData);
+  return randomizedNewAnimal.slice(0, totalNeeded);
+};
+
+const handleDuplicate = (resultFromGenerate, fullArrayInput) => {
+  const totalDuplicate = findDuplicates(resultFromGenerate).length;
+  if (totalDuplicate === 0) return resultFromGenerate;
+  const newAnimals = getNewData(
+    fullArrayInput,
+    resultFromGenerate,
+    totalDuplicate
+  );
+  return [...new Set(resultFromGenerate), ...newAnimals];
+};
+
+const generateRandomNummber = (maxnum, startNumber) =>
+  Math.floor(Math.random() * maxnum + startNumber);
+
 module.exports = {
   sorting,
   upperMe,
   lowerMe,
   capsMe,
-  array2string
+  array2string,
+  handleDuplicate,
+  generateRandomNummber
 };

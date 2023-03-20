@@ -1,48 +1,41 @@
-const { sorting, array2string } = require("../general_function_helper");
+const {
+  sorting,
+  array2string,
+  handleDuplicate,
+  generateRandomNummber
+} = require('../general_function_helper');
 
 const generateNumber = (format) => {
-  try {
-    let result;
+  let result = [];
+  let { random, arr, withzero, maxnum, sort, sorttype, length, allowduplic } =
+    format;
 
-    let { arr, withzero, maxnum, length, sort, sorttype } = format;
+  random = +random;
+  withzero = +withzero;
+  maxnum = +maxnum;
+  arr = +arr;
+  sort = +sort;
+  length = +length;
+  allowduplic = +allowduplic;
 
-    arr = arr === "true";
-    withzero = withzero === "true";
-    sort = sort === "true";
-    maxnum = +maxnum;
-    length = +length;
+  const startNumber = withzero === 1 ? 0 : 1;
 
-    const numAdd = withzero ? 0 : 1;
+  if (random === 1)
+    for (let i = 0; i < length; i++) {
+      result.push(generateRandomNummber(maxnum, startNumber));
 
-    if (arr === true) {
-      result = [];
-      for (let i = 0; i < length; i++) {
-        const randNum = Math.floor(Math.random() * maxnum + numAdd);
-        result.push(randNum);
-      }
-
-      if (sort === true) result = sorting(sorttype, result);
-    }
-
-    if (arr === false) {
-      resString = "";
-      result = [];
-      for (let i = 0; i < length; i++) {
-        const randNum = Math.floor(Math.random() * maxnum + numAdd);
-
-        result.push(randNum);
-      }
-
-      if (sort === true) {
-        result = sorting(sorttype, result);
-        result = array2string(result.length, result);
+      // If maxnum > length, it able to activate the duplicate handler
+      if (maxnum >= length && allowduplic === 0) {
+        let fullNumberOrder = [];
+        for (let i = startNumber; i <= maxnum; i++) fullNumberOrder.push(i);
+        result = handleDuplicate(result, fullNumberOrder);
       }
     }
 
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
+  if (random === 0) for (let i = startNumber; i <= maxnum; i++) result.push(i);
+  if (sort === 1) result = sorting(sorttype, result);
+  if (arr === 0) result = array2string(result);
+  return result;
 };
 
 module.exports = { generateNumber };
