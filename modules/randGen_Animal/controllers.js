@@ -1,4 +1,4 @@
-const { generateAnimal } = require("./helper_function");
+const { generateAnimal } = require('./helper_function');
 
 exports.genAnimal = (req, res) => {
   try {
@@ -6,21 +6,21 @@ exports.genAnimal = (req, res) => {
 
     const data = generateAnimal(format);
 
-    if (typeof data === "number") {
+    if (typeof data === 'number') {
       return res.status(400).send({
         code: 400,
-        codeMessage: "Bad Request",
+        codeMessage: 'Bad Request',
         success: false,
-        message: `The current animals data length is ${data} while your request is ${format.length}`,
+        message: `The current animals data length is ${data} while user request is ${format.length}`
       });
     }
 
     return res.status(200).send({
       code: 200,
-      codeMessage: "OK",
+      codeMessage: 'OK',
       success: true,
-      message: "A new set of animal is generated.",
-      data,
+      message: 'A new set of animal is generated.',
+      data
     });
   } catch (error) {
     console.error(error);

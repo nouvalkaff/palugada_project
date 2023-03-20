@@ -9,20 +9,18 @@ const capsMe = (string) =>
     .toLowerCase()
     .replace(regexGetFirstLetter, (caps) => caps.toUpperCase());
 
-const removeDuplicate = (array) => [...new Set(array)];
-
 function array2string(length, array) {
-  let resString = "";
+  let resString = '';
   for (let i = 0; i < length; i++) {
     if (i === length - 1) resString += array[i];
-    else resString += array[i] + ", ";
+    else resString += array[i] + ', ';
   }
   return resString;
 }
 
 function sorting(sorttype, number_arr) {
   try {
-    return sorttype === "ASC"
+    return sorttype === 'ASC'
       ? quickSortASC(number_arr)
       : quickSortDESC(number_arr);
   } catch (error) {
@@ -69,6 +67,5 @@ module.exports = {
   upperMe,
   lowerMe,
   capsMe,
-  removeDuplicate,
-  array2string,
+  array2string
 };
