@@ -3,12 +3,13 @@ const { commitGenerator } = require('./helper_function');
 exports.commitMaker = async (req, res) => {
   try {
     const { branch, commitMessage, headMessage } = req.body;
-    const { bullet, useStep } = req.query;
+    const { bullet, oneLiner, useStep } = req.query;
     const data = commitGenerator({
       branch,
       bullet,
       commitMessage,
       headMessage,
+      oneLiner,
       useStep
     });
     return res.status(200).send({

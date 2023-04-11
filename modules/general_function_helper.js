@@ -98,7 +98,7 @@ const bulletPointHandler = (bullet) => {
 };
 
 const commitMessageHandler = (object) => {
-  let { bullet, commitMessage, headMessage } = object;
+  let { bullet, commitMessage, headMessage, oneLiner } = object;
   const commitValues = Object.values(commitMessage);
 
   let commitResult = '';
@@ -116,8 +116,11 @@ const commitMessageHandler = (object) => {
     bullet = 'number';
   }
 
-  if (headMessage) commitResult += `${COMMIT_COMMAND} -m '${headMessage}'`;
-  else commitResult += `${COMMIT_COMMAND}`;
+  if (oneLiner === '0' && headMessage) {
+    commitResult += `${COMMIT_COMMAND} -m '${headMessage}'`;
+  } else if (oneLiner === '0' && !headMessage) {
+    commitResult += `${COMMIT_COMMAND}`;
+  }
 
   commitValues.forEach((each) => {
     if (!each) return;
@@ -125,7 +128,7 @@ const commitMessageHandler = (object) => {
     if (!bullet || bullet === 'number') bulletUsed += 1;
   });
 
-  commitResult += ' ';
+  if (oneLiner === '0') commitResult += ' ';
   return [commitResult, commitValues.length];
 };
 
