@@ -120,6 +120,8 @@ const commitMessageHandler = (object) => {
     commitResult += `${COMMIT_COMMAND} -m '${headMessage}'`;
   } else if (oneLiner === '0' && !headMessage) {
     commitResult += `${COMMIT_COMMAND}`;
+  } else if (oneLiner === '1' && headMessage) {
+    commitResult += ` -m '${headMessage}'`;
   }
 
   commitValues.forEach((each) => {
