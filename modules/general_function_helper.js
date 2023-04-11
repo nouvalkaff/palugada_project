@@ -1,3 +1,7 @@
+const { bullets, commands } = require('../constant/commitMaker');
+const { arrowTail0, arrowTail1, arrowTail2, point } = bullets;
+const { COMMIT_COMMAND, NEXT_MESSAGE } = commands;
+
 const regexGetFirstLetter = /\b\w/g;
 
 const upperMe = (string) => string.toUpperCase();
@@ -81,12 +85,56 @@ const handleDuplicate = (resultFromGenerate, fullArrayInput) => {
 const generateRandomNummber = (maxnum, startNumber) =>
   Math.floor(Math.random() * maxnum + startNumber);
 
+const bulletPointHandler = (bullet) => {
+  let bulletPoint;
+
+  if (bullet === 'arrowTail0') bulletPoint = arrowTail0;
+  else if (bullet === 'arrowTail1') bulletPoint = arrowTail1;
+  else if (bullet === 'arrowTail2') bulletPoint = arrowTail2;
+  else if (bullet === 'point') bulletPoint = point;
+  else bulletPoint = false;
+
+  return bulletPoint;
+};
+
+const commitMessageHandler = (object) => {
+  let { bullet, commitMessage, headMessage } = object;
+  const commitValues = Object.values(commitMessage);
+
+  let commitResult = '';
+  let counter = 1;
+  let bulletUsed;
+
+  if (!bullet) bulletUsed = counter;
+
+  if (bullet && bullet !== 'number') {
+    bulletUsed = bulletPointHandler(bullet);
+  }
+
+  if (bulletUsed === false || bullet === 'number') {
+    bulletUsed = counter;
+    bullet = 'number';
+  }
+
+  if (headMessage) commitResult += `${COMMIT_COMMAND} -m '${headMessage}'`;
+  else commitResult += `${COMMIT_COMMAND}`;
+
+  commitValues.forEach((each) => {
+    commitResult += NEXT_MESSAGE.replace('$', `${bulletUsed} ${each}`);
+    if (!bullet || bullet === 'number') bulletUsed += 1;
+  });
+
+  commitResult += ' ';
+  return [commitResult, commitValues.length];
+};
+
 module.exports = {
-  sorting,
-  upperMe,
-  lowerMe,
-  capsMe,
   array2string,
+  capsMe,
+  commitMessageHandler,
+  generateRandomNummber,
   handleDuplicate,
-  generateRandomNummber
+  lowerMe,
+  upperMe,
+  sorting
 };

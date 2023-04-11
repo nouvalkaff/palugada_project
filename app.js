@@ -27,11 +27,13 @@ app.use(Cors({ origin: '*' }));
 const shrinkerRoute = require('./modules/link_shrinker/routers.js');
 const randGenNumRoute = require('./modules/randGen_Number/routers.js');
 const randGenAniRoute = require('./modules/randGen_Animal/routers.js');
+const gitCommitMakerRoute = require('./modules/gitCommitMaker/routers.js');
 
 app.use('', shrinkerRoute);
 app.use('/api/palugada/shrinker', shrinkerRoute);
 app.use('/api/palugada/rgnum', randGenNumRoute);
 app.use('/api/palugada/rgani', randGenAniRoute);
+app.use('/api/palugada/commiter', gitCommitMakerRoute);
 
 // Declare a function to check API is online or offline
 app.all('*', (_, res) => {
