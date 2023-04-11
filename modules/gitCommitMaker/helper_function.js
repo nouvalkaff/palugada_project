@@ -12,6 +12,9 @@ exports.commitGenerator = (object) => {
     headMessage
   });
 
+  if (totalCommits > 5)
+    throw new Error('For now, cannot exceed five commit messages');
+
   const resultUseStep = {
     step1: ADD_COMMAND,
     step2: ENTER_COMMAND,

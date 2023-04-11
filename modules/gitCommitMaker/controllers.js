@@ -20,5 +20,11 @@ exports.commitMaker = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+    return res.status(400).send({
+      code: 400,
+      codeMessage: 'Bad Request',
+      success: false,
+      message: error.message
+    });
   }
 };

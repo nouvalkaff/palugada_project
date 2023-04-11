@@ -120,6 +120,7 @@ const commitMessageHandler = (object) => {
   else commitResult += `${COMMIT_COMMAND}`;
 
   commitValues.forEach((each) => {
+    if (!each) return;
     commitResult += NEXT_MESSAGE.replace('$', `${bulletUsed} ${each}`);
     if (!bullet || bullet === 'number') bulletUsed += 1;
   });
