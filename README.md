@@ -66,7 +66,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 #### Test Connection
 
 ```http
-  POST /api/palugada
+  GET /api/palugada
 ```
 
 #### Link Shrinker
