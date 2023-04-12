@@ -103,7 +103,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `length` | `string` | **Required**. n numbers for random process (maximum input 2,000) |
 | `sort` | `string` | **Required**. 0 = false, 1 = true |
 | `sorttype` | `string` | **Required**. ASC = go up, DESC = go down |
-| `allowduplic` | `string` | **Required**. 0= not allow, 1 = allow |
+| `allowduplic` | `string` | **Required**. 0 = not allow, 1 = allow |
 
 #### Generate Random Set of Animal Name(s)
 
@@ -121,7 +121,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `letter` | `string` | **Required**. caps, upper, lower |
 | `sort` | `string` | **Required**. 0 = false, 1 = true |
 | `sorttype` | `string` | **Required**. ASC = go up, DESC = go down |
-| `allowduplic` | `string` | **Required**. 0= not allow, 1 = allow |
+| `allowduplic` | `string` | **Required**. 0 = not allow, 1 = allow |
 
 #### Git Commit Maker
 
