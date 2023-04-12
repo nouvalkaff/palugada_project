@@ -3,7 +3,7 @@
 
 PALUGADA = aPALu maU Gua ADA
 
-Sebuah proyek dari Mohamad Nouval Abdel Alkaf. Proyek ini mempunyai empat fitur andalan:
+Sebuah proyek API dengan logic sederhana dari Mohamad Nouval Abdel Alkaf untuk kita semua. Proyek ini mempunyai empat fitur andalan:
 
     1. Link Shrinker (penyingkat Link).
     2. Random Number Generator (Membuat satu set angka acak)
