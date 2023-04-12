@@ -3,7 +3,7 @@
 
 PALUGADA = aPALu maU Gua ADA
 
-Sebuah proyek API dengan logic sederhana dari Mohamad Nouval Abdel Alkaf untuk kita semua. Proyek ini mempunyai empat fitur andalan:
+Sebuah proyek dari Mohamad Nouval Abdel Alkaf. Proyek ini mempunyai empat fitur andalan:
 
     1. Link Shrinker (penyingkat Link).
     2. Random Number Generator (Membuat satu set angka acak)
@@ -63,12 +63,6 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 
 ## API Reference
 
-#### Test Connection
-
-```http
-  GET /api/palugada
-```
-
 #### Link Shrinker
 
 ##### 1. Shrinker
@@ -109,7 +103,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `length` | `string` | **Required**. n numbers for random process (maximum input 2,000) |
 | `sort` | `string` | **Required**. 0 = false, 1 = true |
 | `sorttype` | `string` | **Required**. ASC = go up, DESC = go down |
-| `allowduplic` | `string` | **Required**. 0 = not allow, 1 = allow |
+| `allowduplic` | `string` | **Required**. 0= not allow, 1 = allow |
 
 #### Generate Random Set of Animal Name(s)
 
@@ -127,7 +121,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `letter` | `string` | **Required**. caps, upper, lower |
 | `sort` | `string` | **Required**. 0 = false, 1 = true |
 | `sorttype` | `string` | **Required**. ASC = go up, DESC = go down |
-| `allowduplic` | `string` | **Required**. 0 = not allow, 1 = allow |
+| `allowduplic` | `string` | **Required**. 0= not allow, 1 = allow |
 
 #### Git Commit Maker
 
@@ -146,6 +140,5 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | Body | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `branch` | `string` | **Required**. Pushed branch name |
-| `commitMessage` | `object` | **Required**. 0 = false, 1 = true |
-| `message{number}` | `object` | **Required**. Maximum number is five. Detail of commit message. { "message1": "", "message2": "", "message3": "", "message4": "", "message5": "" } |
+| `commitMessage` | `object` | **Required**. Detail of commit message. Maximum is five. Example: { "message1": "", "message2": "", "message3": "", "message4": "", "message5": "" } |
 | `headMessage` | `string` | **Optional**. Set header message |
