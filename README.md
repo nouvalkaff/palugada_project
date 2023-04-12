@@ -63,6 +63,12 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 
 ## API Reference
 
+#### Test Connection
+
+```http
+  POST /api/palugada
+```
+
 #### Link Shrinker
 
 ##### 1. Shrinker
