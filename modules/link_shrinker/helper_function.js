@@ -52,7 +52,7 @@ async function checkMyUniqChars(
   uniqueCharacters,
   urlArray
 ) {
-  let isDuplicate = await shrinkUrl.isUniqueCharsExist(uniqueCharacters);
+  let isDuplicate = await shrinkUrl.isUnixCharactersExist(uniqueCharacters);
   if (isEmpty(isDuplicate)) return urlArray;
 
   const shrinkedAgain = ShrinkMyLongURLPlease(longURL, uniqueCharLength);
