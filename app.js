@@ -28,12 +28,14 @@ const shrinkerRoute = require('./modules/linkShrinker/routers.js');
 const randGenNumRoute = require('./modules/randGenNumber/routers.js');
 const randGenAniRoute = require('./modules/randGenAnimal/routers.js');
 const gitCommitMakerRoute = require('./modules/gitCommitMaker/routers.js');
+const userNameGeRoute = require('./modules/usernameGenerator/routers.js');
 
 app.use('', shrinkerRoute);
 app.use('/api/palugada/shrinker', shrinkerRoute);
 app.use('/api/palugada/rgnum', randGenNumRoute);
 app.use('/api/palugada/rgani', randGenAniRoute);
 app.use('/api/palugada/commiter', gitCommitMakerRoute);
+app.use('/api/palugada/usergen', userNameGeRoute);
 
 // Declare a function to check API is online or offline
 app.all('*', (_, res) => {
