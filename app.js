@@ -24,9 +24,9 @@ app.use(Express.urlencoded({ extended: false }));
  */
 app.use(Cors({ origin: '*' }));
 
-const shrinkerRoute = require('./modules/link_shrinker/routers.js');
-const randGenNumRoute = require('./modules/randGen_Number/routers.js');
-const randGenAniRoute = require('./modules/randGen_Animal/routers.js');
+const shrinkerRoute = require('./modules/linkShrinker/routers.js');
+const randGenNumRoute = require('./modules/randGenNumber/routers.js');
+const randGenAniRoute = require('./modules/randGenAnimal/routers.js');
 const gitCommitMakerRoute = require('./modules/gitCommitMaker/routers.js');
 
 app.use('', shrinkerRoute);
