@@ -34,7 +34,7 @@ function generateAnimal(format) {
 
   if (allowduplic === 0) result = handleDuplicate(result, animals);
   if (sort === 1) result = sorting(sorttype, result);
-  if (arr === 0) result = array2string(result.length, result);
+  if (arr === 0) result = array2string(result);
   return result;
 }
 
