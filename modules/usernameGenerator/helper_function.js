@@ -13,7 +13,7 @@ const [fixedQuery, ...rest] = RAND_QUERY;
 
 const headers = { 'X-Api-Key': process.env.RAND_WORD_API_KEY };
 const method = 'get';
-const path = './modules/usernameGenerator/wordWarehouse.json';
+const path = './tmp/wordWarehouse.json';
 
 const getQueryType = () => {
   const index = generateRandomNumber(3, 0);
