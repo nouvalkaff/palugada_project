@@ -17,29 +17,37 @@ const getQuery = () => {
 
 const randomUsernameGenerator = async (preset) => {
   const { type } = getQuery();
+  const getContent = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
 
+  let theUsername;
   let URI = `${process.env.RAND_WORD_URI}?type=${type}`;
 
   //Generate Username Below
-  const response = await fetch(URI, { method, headers });
+  let isGenerateWord = [true, false];
+  isGenerateWord = isGenerateWord[generateRandomNumber(2, 0)];
+  console.log(isGenerateWord, 'isGenerateWord');
 
-  const { word: randomWord } = await response.json();
-  let theUsername = randomWord;
+  if (isGenerateWord) {
+    const response = await fetch(URI, { method, headers });
+    const { word: randomWord } = await response.json();
 
-  const getContent = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
+    theUsername = randomWord;
+    const isExist = getContent[type].find((element) => element === randomWord);
 
-  const isExist = getContent[type].find((element) => element === randomWord);
-
-  if (!isExist) {
-    getContent[type].push(randomWord);
-    fs.writeFileSync(path, JSON.stringify(getContent));
+    if (!isExist) {
+      getContent[type].push(randomWord);
+      fs.writeFileSync(path, JSON.stringify(getContent));
+    }
+  } else {
+    theUsername = getContent[type];
+    theUsername = theUsername[generateRandomNumber(theUsername.length, 0)];
   }
 
   if (!preset) {
-    let isGenerating = [true, false];
-    isGenerating = isGenerating[generateRandomNumber(2, 0)];
+    let isGeneratePreset = [true, false];
+    isGeneratePreset = isGeneratePreset[generateRandomNumber(2, 0)];
 
-    if (isGenerating) {
+    if (isGeneratePreset) {
       URI = `${process.env.RAND_WORD_URI}?type=${fixedQuery}`;
 
       const response = await fetch(URI, { method, headers });
