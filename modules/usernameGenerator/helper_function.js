@@ -24,8 +24,8 @@ const randomUsernameGenerator = async (preset) => {
     method: 'get',
     headers: { 'X-Api-Key': process.env.RAND_WORD_API_KEY }
   });
-  const { word: randomWord } = await response.json();
 
+  const { word: randomWord } = await response.json();
   theUsername = theUsername.replace('$', randomWord);
 
   if (!preset) {
@@ -37,7 +37,6 @@ const randomUsernameGenerator = async (preset) => {
     });
 
     const { word: generatedPreset } = await response.json();
-
     theUsername = theUsername.replace('?', generatedPreset);
   } else {
     theUsername = theUsername.replace('?', preset);
