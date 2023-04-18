@@ -73,7 +73,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
   POST /api/palugada/shrinker/doit
 ```
 
-| Query | Type     | Description                          |
+| Body  | Type     | Description                          |
 | :---- | :------- | :----------------------------------- |
 | `url` | `string` | **Required**. Original long link/URL |
 
