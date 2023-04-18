@@ -47,6 +47,5 @@ app.all('*', (_, res) => {
   });
 });
 
-// connection();
+connection();
 app.listen(port);
-console.log('server start on ' + port);

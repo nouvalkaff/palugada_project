@@ -15,10 +15,10 @@ const DBConfig = {
     dialect: 'postgres'
   },
   production: {
-    username: 'root',
-    password: null,
-    database: 'database_production',
-    host: 'localhost',
+    username: 'xenanzef',
+    password: 'tzf6_eMh8gOwkOsmNhzZpx9kCNfSFyRu',
+    database: 'xenanzef',
+    host: 'rosie.db.elephantsql.com',
     logging: false,
     dialect: 'postgres'
   }
