@@ -25,7 +25,6 @@ const randomUsernameGenerator = async (preset) => {
   //Generate Username Below
   let isGenerateWord = [true, false];
   isGenerateWord = isGenerateWord[generateRandomNumber(2, 0)];
-  console.log(isGenerateWord, 'isGenerateWord');
 
   if (isGenerateWord) {
     const response = await fetch(URI, { method, headers });
