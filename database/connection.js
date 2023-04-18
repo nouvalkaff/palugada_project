@@ -3,21 +3,16 @@ require('dotenv').config();
 const { Client } = require('pg');
 
 const port = process.env.DEV_PORT;
-// const DBConfig = require('../config/dbConfig');
+const DBConfig = require('../config/dbConfig');
 
-// const {
-//   username: user,
-//   password,
-//   database,
-//   host
-// } = DBConfig[process.env.NODE_ENV];
+const {
+  username: user,
+  password,
+  database,
+  host
+} = DBConfig[process.env.NODE_ENV];
 
-const client = new Client({
-  user: 'xenanzef',
-  password: 'tzf6_eMh8gOwkOsmNhzZpx9kCNfSFyRu',
-  host: 'rosie.db.elephantsql.com',
-  database: 'xenanzef'
-});
+const client = new Client({ user, password, host, database });
 
 const connection = async () => {
   try {
