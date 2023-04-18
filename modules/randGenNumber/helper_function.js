@@ -2,7 +2,7 @@ const {
   sorting,
   array2string,
   handleDuplicate,
-  generateRandomNummber
+  generateRandomNumber
 } = require('../general_function_helper');
 
 const generateNumber = (format) => {
@@ -22,7 +22,7 @@ const generateNumber = (format) => {
 
   if (random === 1)
     for (let i = 0; i < length; i++) {
-      result.push(generateRandomNummber(maxnum, startNumber));
+      result.push(generateRandomNumber(maxnum, startNumber));
 
       // If maxnum > length, it able to activate the duplicate handler
       if (maxnum >= length && allowduplic === 0) {

@@ -82,7 +82,7 @@ const handleDuplicate = (resultFromGenerate, fullArrayInput) => {
   return [...new Set(resultFromGenerate), ...newAnimals];
 };
 
-const generateRandomNummber = (maxnum, startNumber) =>
+const generateRandomNumber = (maxnum, startNumber) =>
   Math.floor(Math.random() * maxnum + startNumber);
 
 const bulletPointHandler = (bullet) => {
@@ -138,9 +138,10 @@ module.exports = {
   array2string,
   capsMe,
   commitMessageHandler,
-  generateRandomNummber,
+  generateRandomNumber,
   handleDuplicate,
   lowerMe,
   upperMe,
-  sorting
+  sorting,
+  shuffle
 };
