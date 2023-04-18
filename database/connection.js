@@ -4,6 +4,7 @@ const { Client } = require('pg');
 
 const port = process.env.DEV_PORT;
 const DBConfig = require('../config/dbConfig');
+console.log(DBConfig, '=== DBConfig ===');
 const {
   username: user,
   password,
