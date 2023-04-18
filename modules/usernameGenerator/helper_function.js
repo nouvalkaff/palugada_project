@@ -1,7 +1,12 @@
 const fs = require('fs');
 
 const { RAND_QUERY, CONNECTOR } = require('../../constant/usernameGen');
-const { generateRandomNumber } = require('../general_function_helper');
+const {
+  generateRandomNumber,
+  upperMe,
+  lowerMe,
+  capsMe
+} = require('../general_function_helper');
 const { animals } = require('../randGenAnimal/animals_name_en');
 
 const [fixedQuery, ...rest] = RAND_QUERY;
@@ -32,11 +37,11 @@ const randomUsernameGenerator = async (query) => {
     const { word: randomWord } = await response.json();
 
     if (!firstSet || firstSet === 'lower') {
-      theUsername = randomWord.toLowerCase();
+      theUsername = lowerMe(randomWord);
     } else if (firstSet === 'upper') {
-      theUsername = randomWord.toUpperCase();
+      theUsername = upperMe(randomWord);
     } else {
-      theUsername = randomWord.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
+      theUsername = capsMe(randomWord);
     }
 
     const isExist = getContent[type].find((element) => element === randomWord);
@@ -50,11 +55,11 @@ const randomUsernameGenerator = async (query) => {
     theUsername = theUsername[generateRandomNumber(theUsername.length, 0)];
 
     if (!firstSet || firstSet === 'lower') {
-      theUsername = theUsername.toLowerCase();
+      theUsername = lowerMe(theUsername);
     } else if (firstSet === 'upper') {
-      theUsername = theUsername.toUpperCase();
+      theUsername = upperMe(theUsername);
     } else {
-      theUsername = theUsername.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
+      theUsername = capsMe(theUsername);
     }
   }
 
