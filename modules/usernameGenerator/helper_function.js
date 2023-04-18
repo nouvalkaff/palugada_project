@@ -3,6 +3,8 @@ const { generateRandomNumber } = require('../general_function_helper');
 const { animals } = require('../randGenAnimal/animals_name_en');
 
 const [fixedQuery, ...rest] = RAND_QUERY;
+const headers = { 'X-Api-Key': process.env.RAND_WORD_API_KEY };
+const method = 'get';
 
 const getQuery = () => {
   const index = generateRandomNumber(3, 0);
@@ -16,19 +18,10 @@ const randomUsernameGenerator = async (preset) => {
   let URI = `${process.env.RAND_WORD_URI}?type=${type}`;
 
   //Generate Username Below
-  if (type === 'adverb') {
-    let usingThe = ['', 'the'];
-    usingThe = usingThe[generateRandomNumber(2, 0)];
-    theUsername = placement.replace('!', usingThe);
-  }
-
-  const response = await fetch(URI, {
-    method: 'get',
-    headers: { 'X-Api-Key': process.env.RAND_WORD_API_KEY }
-  });
+  const response = await fetch(URI, { method, headers });
 
   const { word: randomWord } = await response.json();
-  theUsername = theUsername.replace('$', randomWord);
+  theUsername = placement.replace('$', randomWord);
 
   if (!preset) {
     let isGenerating = [true, false];
@@ -37,10 +30,7 @@ const randomUsernameGenerator = async (preset) => {
     if (isGenerating) {
       URI = `${process.env.RAND_WORD_URI}?type=${fixedQuery}`;
 
-      const response = await fetch(URI, {
-        method: 'get',
-        headers: { 'X-Api-Key': process.env.RAND_WORD_API_KEY }
-      });
+      const response = await fetch(URI, { method, headers });
 
       const { word: generatedPreset } = await response.json();
       theUsername = theUsername.replace('?', generatedPreset);

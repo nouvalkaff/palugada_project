@@ -7,7 +7,7 @@ exports.RAND_QUERY = [
   'noun',
   {
     type: 'verb',
-    placement: 'the$?'
+    placement: '$?'
   },
   {
     type: 'adjective',
@@ -15,6 +15,6 @@ exports.RAND_QUERY = [
   },
   {
     type: 'adverb',
-    placement: '!$?'
+    placement: '$?'
   }
 ];
