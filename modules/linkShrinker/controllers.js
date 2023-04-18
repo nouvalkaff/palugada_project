@@ -52,7 +52,7 @@ exports.redirectToRealURL = async (req, res) => {
 
 exports.shrinkTheURL = async (req, res) => {
   try {
-    const longURL = req.query.url;
+    const longURL = req.body.url;
 
     // field url cannot be empty or undefined
     if (!longURL) {
