@@ -1,10 +1,14 @@
+const fs = require('fs');
+
 const { RAND_QUERY } = require('../../constant/usernameGen');
 const { generateRandomNumber } = require('../general_function_helper');
 const { animals } = require('../randGenAnimal/animals_name_en');
 
 const [fixedQuery, ...rest] = RAND_QUERY;
+
 const headers = { 'X-Api-Key': process.env.RAND_WORD_API_KEY };
 const method = 'get';
+const path = './modules/usernameGenerator/wordWarehouse.json';
 
 const getQuery = () => {
   const index = generateRandomNumber(3, 0);
@@ -12,8 +16,7 @@ const getQuery = () => {
 };
 
 const randomUsernameGenerator = async (preset) => {
-  const { type, placement } = getQuery();
-  let theUsername = placement;
+  const { type } = getQuery();
 
   let URI = `${process.env.RAND_WORD_URI}?type=${type}`;
 
@@ -21,7 +24,13 @@ const randomUsernameGenerator = async (preset) => {
   const response = await fetch(URI, { method, headers });
 
   const { word: randomWord } = await response.json();
-  theUsername = placement.replace('$', randomWord);
+  let theUsername = randomWord;
+
+  const getContent = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
+
+  getContent[type].push(randomWord);
+
+  fs.writeFileSync(path, JSON.stringify(getContent));
 
   if (!preset) {
     let isGenerating = [true, false];
@@ -33,13 +42,13 @@ const randomUsernameGenerator = async (preset) => {
       const response = await fetch(URI, { method, headers });
 
       const { word: generatedPreset } = await response.json();
-      theUsername = theUsername.replace('?', generatedPreset);
+      theUsername += generatedPreset;
       return theUsername.toLowerCase();
     } else {
       animalPreset = animals[generateRandomNumber(animals.length, 0)];
       animalPreset = animalPreset.replace(' ', '');
 
-      theUsername = theUsername.replace('?', animalPreset);
+      theUsername += animalPreset;
       return theUsername.toLowerCase();
     }
   }
