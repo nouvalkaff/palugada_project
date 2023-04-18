@@ -2,8 +2,7 @@ const { randomUsernameGenerator } = require('./helper_function');
 
 exports.userNameGenerator = async (req, res) => {
   try {
-    const { preset } = req.query;
-    const data = await randomUsernameGenerator(preset);
+    const data = await randomUsernameGenerator(req.query);
 
     return res.status(200).send({
       code: 200,

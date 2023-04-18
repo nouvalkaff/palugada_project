@@ -10,16 +10,18 @@ const headers = { 'X-Api-Key': process.env.RAND_WORD_API_KEY };
 const method = 'get';
 const path = './modules/usernameGenerator/wordWarehouse.json';
 
-const getQuery = () => {
+const getQueryType = () => {
   const index = generateRandomNumber(3, 0);
   return rest[index];
 };
 
-const randomUsernameGenerator = async (preset) => {
-  const { type } = getQuery();
+const randomUsernameGenerator = async (query) => {
+  const { type } = getQueryType();
+  const { preset, useConnector } = query;
   const getContent = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
 
   let theUsername;
+  let connector = ['.', '_', 'X', '-', '_X_', '.X.', '_x_', '.x.'];
   let URI = `${process.env.RAND_WORD_URI}?type=${type}`;
 
   //Generate Username Below
@@ -42,6 +44,10 @@ const randomUsernameGenerator = async (preset) => {
     theUsername = theUsername[generateRandomNumber(theUsername.length, 0)];
   }
 
+  if (useConnector === '1') {
+    theUsername += connector[generateRandomNumber(connector.length, 0)];
+  }
+
   if (!preset) {
     let isGeneratePreset = [true, false];
     isGeneratePreset = isGeneratePreset[generateRandomNumber(2, 0)];
@@ -52,19 +58,19 @@ const randomUsernameGenerator = async (preset) => {
       const response = await fetch(URI, { method, headers });
 
       const { word: generatedPreset } = await response.json();
-      theUsername += generatedPreset;
-      return theUsername.toLowerCase();
+      theUsername += generatedPreset.toLowerCase();
+      return theUsername;
     } else {
       animalPreset = animals[generateRandomNumber(animals.length, 0)];
-      animalPreset = animalPreset.replace(' ', '');
+      animalPreset = animalPreset.replace(/\s/g, '').toLowerCase();
 
       theUsername += animalPreset;
-      return theUsername.toLowerCase();
+      return theUsername;
     }
   }
 
-  theUsername = theUsername.replace('?', preset);
-  return theUsername.toLowerCase();
+  theUsername += preset.toLowerCase();
+  return theUsername;
 };
 
 module.exports = { randomUsernameGenerator };
