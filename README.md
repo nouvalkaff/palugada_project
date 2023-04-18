@@ -10,6 +10,7 @@ Sebuah proyek dari Mohamad Nouval Abdel Alkaf. Proyek ini mempunyai empat fitur 
     2. Random Number Generator (Membuat satu set angka acak)
     3. Random Animal Generator (Membuat satu set nama hewan acak)
     4. Git Commit Maker (Buat pesan Git commit semudah copas)
+    5. Username Generator (Membuat username socmed atau game dengan sat-set)
 
 ## Authors
 
