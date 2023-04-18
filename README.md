@@ -2,6 +2,8 @@
 
 PALUGADA = aPALu maU Gua ADA
 
+NodeJS version 18.12.1 or up.
+
 Sebuah proyek dari Mohamad Nouval Abdel Alkaf. Proyek ini mempunyai empat fitur andalan:
 
     1. Link Shrinker (penyingkat Link).
