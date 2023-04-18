@@ -6,13 +6,13 @@ PALUGADA = aPALu maU Gua ADA
   NodeJS version 18.12.1 or up
 ```
 
-Sebuah proyek dari Mohamad Nouval Abdel Alkaf. Proyek ini mempunyai empat fitur andalan:
+An API project by Mohamad Nouval Abdel Alkaf. This API has five features available, like:
 
-    1. Link Shrinker (penyingkat Link).
-    2. Random Number Generator (Membuat satu set angka acak)
-    3. Random Animal Generator (Membuat satu set nama hewan acak)
-    4. Git Commit Maker (Buat pesan Git commit semudah copas)
-    5. Username Generator (Membuat username socmed atau game dengan sat-set)
+    1. Link Shrinker (Shorten your really long link / URL to only three unique characters).
+    2. Random Number Generator (Generate you a set of random number variation).
+    3. Random Animal Generator (Generate you a set of random animal name variation).
+    4. Git Commit Maker (Ease you in creating GIT commit message in list format).
+    5. Username Generator (Generate you an unexpected username for social media or game in swift manner).
 
 ## Authors
 
@@ -131,7 +131,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 ##### 1. Create Git Commit
 
 ```http
-  GET /api/palugada/commiter/make-git-commit
+  POST /api/palugada/commiter/make-git-commit
 ```
 
 | Query      | Type     | Description                                                     |
