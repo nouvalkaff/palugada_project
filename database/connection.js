@@ -12,6 +12,13 @@ const {
   host
 } = DBConfig[process.env.NODE_ENV];
 
+console.log({
+  username: user,
+  password,
+  database,
+  host
+});
+
 const client = new Client({ user, password, host, database });
 
 const connection = async () => {
