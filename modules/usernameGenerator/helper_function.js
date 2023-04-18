@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { RAND_QUERY } = require('../../constant/usernameGen');
+const { RAND_QUERY, CONNECTOR } = require('../../constant/usernameGen');
 const { generateRandomNumber } = require('../general_function_helper');
 const { animals } = require('../randGenAnimal/animals_name_en');
 
@@ -17,24 +17,10 @@ const getQueryType = () => {
 
 const randomUsernameGenerator = async (query) => {
   const { type } = getQueryType();
-  const { preset, useConnector } = query;
+  const { preset, useConnector, firstSet } = query;
   const getContent = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
 
   let theUsername;
-  let connector = [
-    '.',
-    '_',
-    'X',
-    '-',
-    '_X_',
-    '.X.',
-    '_x_',
-    '.x.',
-    '_v_',
-    '.v.',
-    '_V_',
-    '.V.'
-  ];
   let URI = `${process.env.RAND_WORD_URI}?type=${type}`;
 
   //Generate Username Below
@@ -45,7 +31,14 @@ const randomUsernameGenerator = async (query) => {
     const response = await fetch(URI, { method, headers });
     const { word: randomWord } = await response.json();
 
-    theUsername = randomWord;
+    if (!firstSet || firstSet === 'lower') {
+      theUsername = randomWord.toLowerCase();
+    } else if (firstSet === 'upper') {
+      theUsername = randomWord.toUpperCase();
+    } else {
+      theUsername = randomWord.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
+    }
+
     const isExist = getContent[type].find((element) => element === randomWord);
 
     if (!isExist) {
@@ -55,10 +48,18 @@ const randomUsernameGenerator = async (query) => {
   } else {
     theUsername = getContent[type];
     theUsername = theUsername[generateRandomNumber(theUsername.length, 0)];
+
+    if (!firstSet || firstSet === 'lower') {
+      theUsername = theUsername.toLowerCase();
+    } else if (firstSet === 'upper') {
+      theUsername = theUsername.toUpperCase();
+    } else {
+      theUsername = theUsername.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
+    }
   }
 
   if (useConnector === '1') {
-    theUsername += connector[generateRandomNumber(connector.length, 0)];
+    theUsername += CONNECTOR[generateRandomNumber(CONNECTOR.length, 0)];
   }
 
   if (!preset) {
@@ -82,7 +83,7 @@ const randomUsernameGenerator = async (query) => {
     }
   }
 
-  theUsername += preset.toLowerCase();
+  theUsername += preset;
   return theUsername;
 };
 
