@@ -21,7 +21,20 @@ const randomUsernameGenerator = async (query) => {
   const getContent = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
 
   let theUsername;
-  let connector = ['.', '_', 'X', '-', '_X_', '.X.', '_x_', '.x.'];
+  let connector = [
+    '.',
+    '_',
+    'X',
+    '-',
+    '_X_',
+    '.X.',
+    '_x_',
+    '.x.',
+    '_v_',
+    '.v.',
+    '_V_',
+    '.V.'
+  ];
   let URI = `${process.env.RAND_WORD_URI}?type=${type}`;
 
   //Generate Username Below
