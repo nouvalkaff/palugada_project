@@ -28,9 +28,12 @@ const randomUsernameGenerator = async (preset) => {
 
   const getContent = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
 
-  getContent[type].push(randomWord);
+  const isExist = getContent[type].find((element) => element === randomWord);
 
-  fs.writeFileSync(path, JSON.stringify(getContent));
+  if (!isExist) {
+    getContent[type].push(randomWord);
+    fs.writeFileSync(path, JSON.stringify(getContent));
+  }
 
   if (!preset) {
     let isGenerating = [true, false];
