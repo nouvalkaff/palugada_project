@@ -159,3 +159,23 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `preset`       | `string` | **Required**. string input as username preset |
 | `useConnector` | `string` | **Required**. 0 = false, 1 = true             |
 | `firstSet`     | `string` | **Required**. caps, upper, lower              |
+
+#### Smart Commit Maker
+
+##### 1. Smart Commit Maker
+
+```http
+  POST /api/palugada/commiter/make-smart-commit
+```
+
+| Query      | Type     | Description                                                     |
+| :--------- | :------- | :-------------------------------------------------------------- |
+| `useStep`  | `string` | **Required**. 0 = false, 1 = true                               |
+| `bullet`   | `string` | **Required**. number, arrowTail0, arrowTail1, arrowTail2, point |
+| `oneLiner` | `string` | **Required**. 0 = false, 1 = true                               |
+
+| Body            | Type     | Description                                                                                                                                          |
+| :-------------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `branch`        | `string` | **Required**. Pushed branch name                                                                                                                     |
+| `headComment` | `object` | **Required**. Detail of commit message. Maximum is five. Example: { "issueKey":[],"time":{"days":"","hours":"","minutes":""},"transition":"" } |
+| `detailComment`   | `string` | **Optional**. { "comment1":"Change three file names into camel case","comment2":"","comment3":"","comment4":"","comment5":"" }  |
