@@ -44,12 +44,12 @@ const randomUsernameGenerator = async (query) => {
       theUsername = capsMe(randomWord);
     }
 
-    const isExist = getContent[type].find((element) => element === randomWord);
+    // const isExist = getContent[type].find((element) => element === randomWord);
 
-    if (!isExist) {
-      getContent[type].push(randomWord);
-      fs.writeFileSync(path, JSON.stringify(getContent));
-    }
+    // if (!isExist) {
+    //   getContent[type].push(randomWord);
+    //   fs.writeFileSync(path, JSON.stringify(getContent));
+    // }
   } else {
     theUsername = getContent[type];
     theUsername = theUsername[generateRandomNumber(theUsername.length, 0)];
