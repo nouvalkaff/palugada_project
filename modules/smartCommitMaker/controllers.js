@@ -13,9 +13,11 @@ exports.smartCommitMaker = async (req, res) => {
     });
 
     const response = {
-      ATTENTION:
-        'Please use --> Git Bash terminal <-- to execute the command below. More information about smart commit please refer to https://plgda.cyclic.app/bQz',
-      command: data
+      attention:
+        'Please use --> Git Bash terminal <-- to execute the command below.',
+      transitionInfo:
+        'More information about smart commit please refer to https://plgda.cyclic.app/bQz',
+      gitCommitCommand: data
     };
 
     return res.status(200).send({
