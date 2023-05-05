@@ -179,7 +179,7 @@ const smartCommitHandler = (object) => {
   let counter = '1.';
   let bulletUsed;
   let commitMessages =
-    "git add . && git commit -m '$1$2$3' $4 $5 && git push origin $6";
+    "git add . && git commit -m '$1$2$3' $4$5 && git push origin $6";
 
   const { branch, detailComment, headComment } = object;
   let { bullet } = object;
