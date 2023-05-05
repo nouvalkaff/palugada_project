@@ -13,7 +13,8 @@ exports.smartCommitMaker = async (req, res) => {
     });
 
     const response = {
-      ATTENTION: 'WE RECOMMENDED USING GIT BASH TERMINAL TO EXECUTE!',
+      ATTENTION:
+        'Please use --> Git Bash terminal <-- to execute the command below. More information about smart commit please refer to https://plgda.cyclic.app/bQz',
       command: data
     };
 
