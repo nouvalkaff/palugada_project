@@ -18,7 +18,7 @@ exports.smartCommitMaker = async (req, res) => {
       gitCommit: {
         attention:
           'Please use --> Git Bash terminal <-- to execute the command below.',
-        command
+        command: data
       }
     };
 
