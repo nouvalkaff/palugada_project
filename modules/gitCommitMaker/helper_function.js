@@ -31,7 +31,7 @@ exports.commitGenerator = (object) => {
 
   const oneLinerResult = {
     ATTENTION: 'WE RECOMMENDED USING GIT BASH TERMINAL TO EXECUTE!',
-    command: ` git add . && git commit${commits} && git push origin ${branch} `
+    command: `git add . && git commit${commits} && git push origin ${branch}`
   };
 
   return oneLiner === '1'
