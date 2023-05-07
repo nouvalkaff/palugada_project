@@ -30,8 +30,10 @@ const randGenAniRoute = require('./modules/randGenAnimal/routers.js');
 const gitCommitMakerRoute = require('./modules/gitCommitMaker/routers.js');
 const smartCommitMakerRoute = require('./modules/smartCommitMaker/routers.js');
 const userNameGeRoute = require('./modules/usernameGenerator/routers.js');
+const fidyahCalculatorRoute = require('./modules/fidyahCalculator/routers.js');
 
 app.use('', shrinkerRoute);
+app.use('/api/palugada', fidyahCalculatorRoute);
 app.use('/api/palugada/shrinker', shrinkerRoute);
 app.use('/api/palugada/rgnum', randGenNumRoute);
 app.use('/api/palugada/rgani', randGenAniRoute);
