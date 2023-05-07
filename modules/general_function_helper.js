@@ -15,6 +15,23 @@ const capsMe = (string) =>
 
 const array2string = (array) => String(array).replace(/\,/g, ', ');
 
+const getIdnYear = (time) => {
+  const regex = /20\d{2}/;
+
+  const year = String(time).match(regex);
+
+  if (!year) throw 'No year found from the time string';
+
+  return +year[0];
+};
+
+const formatNumber = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+const toInt = (input) => {
+  if (String(+input) === 'NaN') throw 'Input must be all number';
+  return +input;
+};
+
 function sorting(sorttype, dataInArray) {
   return sorttype === 'ASC'
     ? quickSortASC(dataInArray)
@@ -246,11 +263,14 @@ module.exports = {
   array2string,
   capsMe,
   commitMessageHandler,
+  formatNumber,
   generateRandomNumber,
-  smartCommitHandler,
+  getIdnYear,
   handleDuplicate,
   lowerMe,
-  upperMe,
+  shuffle,
+  smartCommitHandler,
   sorting,
-  shuffle
+  toInt,
+  upperMe
 };
