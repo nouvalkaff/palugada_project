@@ -43,6 +43,9 @@ exports.calculateFidyah = async (rate, req) => {
   } else {
     for (let element of body) {
       const { days } = element;
+
+      toInt(days);
+
       const quantity = days;
       const multiplier = 1;
       const addition = +(multiplier * quantity * rate).toFixed(2);
