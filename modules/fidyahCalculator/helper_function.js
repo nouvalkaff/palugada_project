@@ -42,9 +42,14 @@ exports.calculateFidyah = async (rate, req) => {
     }
   } else {
     for (let element of body) {
-      const { days } = element;
+      const { year, days } = element;
 
+      toInt(year);
       toInt(days);
+
+      const yearDiff = idnYear - year;
+
+      if (yearDiff < 0) throw 'Year input cannot exceeds current year.';
 
       const quantity = days;
       const multiplier = 1;
