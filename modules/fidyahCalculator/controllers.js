@@ -1,9 +1,9 @@
 const { calculateFidyah } = require('./helper_function');
-const rate = 1.4;
+const rate = 10000;
 
 exports.fidyahController = async (req, res) => {
   try {
-    const data = await calculateFidyah(rate, req.body);
+    const data = await calculateFidyah(rate, req);
 
     return res.status(200).send({
       code: 200,
