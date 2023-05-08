@@ -1,5 +1,5 @@
 const { calculateFidyah } = require('./helper_function');
-const rate = 10000;
+const rate = 1.4;
 
 exports.fidyahController = async (req, res) => {
   try {
