@@ -5,7 +5,7 @@ const {
 } = require('../general_function_helper');
 
 const errorMessage =
-  'Input "year" tidak bisa melebihi tahun di waktu sekarang.';
+  "Input 'year' tidak bisa melebihi tahun di waktu sekarang.";
 
 exports.calculateFidyah = async (rate, req) => {
   /**
