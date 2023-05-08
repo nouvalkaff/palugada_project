@@ -4,6 +4,9 @@ const {
   toInt
 } = require('../general_function_helper');
 
+const errorMessage =
+  'Input "year" tidak bisa melebihi tahun di waktu sekarang.';
+
 exports.calculateFidyah = async (rate, req) => {
   /**
    * If the year is same with the current year, quantity is one.
@@ -33,7 +36,7 @@ exports.calculateFidyah = async (rate, req) => {
 
       const yearDiff = idnYear - year;
 
-      if (yearDiff < 0) throw 'Year input cannot exceeds current year.';
+      if (yearDiff < 0) throw errorMessage;
 
       const quantity = days;
       const multiplier = yearDiff === 0 ? 1 : yearDiff;
@@ -49,7 +52,7 @@ exports.calculateFidyah = async (rate, req) => {
 
       const yearDiff = idnYear - year;
 
-      if (yearDiff < 0) throw 'Year input cannot exceeds current year.';
+      if (yearDiff < 0) throw errorMessage;
 
       const quantity = days;
       const multiplier = 1;
