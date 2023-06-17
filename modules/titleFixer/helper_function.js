@@ -10,6 +10,7 @@ const capsTheFirstRepetition = (repetitiveWord) => {
 
 const standardizedGeneralFormat = (myTitle) => {
   const splitTitle = myTitle.split(' ');
+
   let getRepetitiveWord = [];
   let newTitleArray = [];
 
@@ -21,7 +22,11 @@ const standardizedGeneralFormat = (myTitle) => {
     ) {
       getRepetitiveWord.push(splitTitle[i]);
       if (getRepetitiveWord.length === 3) {
-        newTitleArray.push(getRepetitiveWord.join(''));
+        newTitleArray.push(
+          getRepetitiveWord
+            .map((element, index) => (!index ? capsMe(element) : element))
+            .join('')
+        );
         getRepetitiveWord = [];
       }
     } else {
@@ -33,10 +38,9 @@ const standardizedGeneralFormat = (myTitle) => {
 };
 
 const fixMyTitle = (myTitle) => {
-  const standardizedtitle = standardizedGeneralFormat(myTitle);
-  return standardizedtitle
+  return standardizedGeneralFormat(myTitle)
     .map((element) =>
-      element.includes('-') ? capsTheFirstRepetition(element) : capsMe(element)
+      !element.includes('-') ? capsMe(element) : capsTheFirstRepetition(element)
     )
     .join(' ');
 };
