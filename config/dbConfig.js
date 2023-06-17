@@ -8,8 +8,8 @@ const DBConfig = {
   },
   test: {
     username: 'postgres',
-    password: 'satria3',
-    database: 'testDB',
+    password: 'postgres1234',
+    database: 'palugada',
     host: 'localhost',
     logging: false,
     dialect: 'postgres'

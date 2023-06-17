@@ -6,7 +6,7 @@ const Express = require('express');
 
 // Declare other essential packages
 const Cors = require('cors');
-const port = process.env.DEV_PORT || process.env.PROD_PORT || 3000;
+const port = process.env.DEV_PORT || process.env.PROD_PORT || 1927;
 
 // Declare app variable to allow in creating other essential functions
 const app = Express();

@@ -2,7 +2,7 @@
 require('dotenv').config();
 const { Client } = require('pg');
 
-const port = process.env.DEV_PORT || process.env.PROD_PORT || 3000;
+const port = process.env.DEV_PORT || process.env.PROD_PORT || 1927;
 const DBConfig = require('../config/dbConfig');
 
 const {

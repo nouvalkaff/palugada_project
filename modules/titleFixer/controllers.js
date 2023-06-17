@@ -1,15 +1,15 @@
-const { capsMe } = require("../general_function_helper");
+const { titleFixerService } = require('./helper_function');
 
 exports.titleFixer = (req, res) => {
-  const { judul } = req.body;
+  const { judul } = req.query;
 
-  let capitalize = capsMe(judul);
+  const fixedTitle = titleFixerService(judul);
 
   return res.status(200).send({
     code: 200,
-    codeMessage: "OK",
+    codeMessage: 'OK',
     success: true,
-    message: "Succesfully generating smart commit message",
-    data: judul,
+    message: 'Succesfully fixing the title',
+    data: fixedTitle
   });
 };
