@@ -50,6 +50,7 @@ const standardizedGeneralFormat = (myTitle) => {
 };
 
 const checkParticleWords = (words) => {
+  // This function checks the particle words of Bahasa Indonesia
   if (count === 0) {
     count++;
     return capsMe(words);
