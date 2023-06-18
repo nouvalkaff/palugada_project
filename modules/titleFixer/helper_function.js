@@ -1,9 +1,17 @@
 const { capsMe, lowerMe } = require('../general_function_helper');
 
 const capsTheFirstRepetition = (repetitiveWord) => {
-  // This function is to capitalize the first word in repetition words.
-  return lowerMe(repetitiveWord)
-    .split('-')
+  // This condition is to capitalize the word in repetition words.
+
+  const splittedWords = lowerMe(repetitiveWord).split('-');
+  const [left, right] = splittedWords;
+
+  // This condition is to capitalize the first and second words in repetition words.
+  if (left === right)
+    return splittedWords.map((element) => capsMe(element)).join('-');
+
+  // This condition is to capitalize the first word in repetition words.
+  return splittedWords
     .map((element, index) => (!index ? capsMe(element) : element))
     .join('-');
 };
