@@ -7,9 +7,9 @@ const DBConfig = {
     dialect: process.env.DEV_DIALECT
   },
   test: {
-    username: 'root',
-    password: null,
-    database: 'database_test',
+    username: 'postgres',
+    password: 'postgres1234',
+    database: 'palugada',
     host: 'localhost',
     logging: false,
     dialect: 'postgres'

@@ -6,7 +6,7 @@ const Express = require('express');
 
 // Declare other essential packages
 const Cors = require('cors');
-const port = process.env.DEV_PORT || process.env.PROD_PORT;
+const port = process.env.DEV_PORT || process.env.PROD_PORT || 1927;
 
 // Declare app variable to allow in creating other essential functions
 const app = Express();
@@ -31,6 +31,7 @@ const gitCommitMakerRoute = require('./modules/gitCommitMaker/routers.js');
 const smartCommitMakerRoute = require('./modules/smartCommitMaker/routers.js');
 const userNameGeRoute = require('./modules/usernameGenerator/routers.js');
 const fidyahCalculatorRoute = require('./modules/fidyahCalculator/routers.js');
+const titleFixRoute = require('./modules/titleFixer/routers.js');
 
 app.use('', shrinkerRoute);
 app.use('/api/palugada', fidyahCalculatorRoute);
@@ -40,6 +41,7 @@ app.use('/api/palugada/rgani', randGenAniRoute);
 app.use('/api/palugada/commiter', gitCommitMakerRoute);
 app.use('/api/palugada/s-commiter', smartCommitMakerRoute);
 app.use('/api/palugada/usergen', userNameGeRoute);
+app.use('/api/palugada/benerinjudul', titleFixRoute);
 
 // Declare a function to check API is online or offline
 app.all('*', (_, res) => {
