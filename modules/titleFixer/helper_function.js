@@ -1,16 +1,19 @@
 const { capsMe, lowerMe } = require('../general_function_helper');
+const { particleConjuctionsWords } = require('../../constant/titleFixer');
+
+let count = 0;
 
 const capsTheFirstRepetition = (repetitiveWord) => {
-  // This condition is to capitalize the word in repetition words.
-
+  // This function is to capitalize the word in repetition words
   const splittedWords = lowerMe(repetitiveWord).split('-');
   const [left, right] = splittedWords;
 
-  // This condition is to capitalize the first and second words in repetition words.
-  if (left === right)
+  // This condition is to capitalize the first and second words in repetition words
+  if (right.includes(left)) {
     return splittedWords.map((element) => capsMe(element)).join('-');
+  }
 
-  // This condition is to capitalize the first word in repetition words.
+  // This condition is to capitalize the first word in repetition words
   return splittedWords
     .map((element, index) => (!index ? capsMe(element) : element))
     .join('-');
@@ -46,13 +49,28 @@ const standardizedGeneralFormat = (myTitle) => {
   return newTitleArray;
 };
 
+const checkParticleConjectionWords = (words) => {
+  if (count === 0) {
+    count++;
+    return capsMe(words);
+  }
+
+  const checkWordCondition = particleConjuctionsWords.includes(words);
+
+  if (!checkWordCondition) return capsMe(words);
+  return lowerMe(words);
+};
+
 const fixMyTitle = (myTitle) => {
+  // This is a main service function to fix queried title
   const standardizedTitle = standardizedGeneralFormat(myTitle);
 
-  // This function fix the capitalization of the repetition words, join, and return it
+  // This function fix the capitalization of the repetition words and join
   return standardizedTitle
     .map((element) =>
-      !element.includes('-') ? element : capsTheFirstRepetition(element)
+      !element.includes('-')
+        ? checkParticleConjectionWords(element)
+        : capsTheFirstRepetition(element)
     )
     .join(' ');
 };
