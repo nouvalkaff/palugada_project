@@ -1,4 +1,4 @@
-const particleConjuctionsWords = [
+const particleWords = [
   'di',
   'ke',
   'dari',
@@ -86,8 +86,18 @@ const particleConjuctionsWords = [
   'oleh karena',
   'oleh sebab',
   'sehingga',
-  'maka(nya)'
+  'maka(nya)',
+  'dong',
+  'sih',
+  'wow',
+  'yuk',
+  'lho',
+  'para',
+  'si',
+  'sih',
+  'pun',
+  'per'
 ];
 module.exports = {
-  particleConjuctionsWords
+  particleWords
 };

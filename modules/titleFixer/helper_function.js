@@ -1,5 +1,5 @@
 const { capsMe, lowerMe } = require('../general_function_helper');
-const { particleConjuctionsWords } = require('../../constant/titleFixer');
+const { particleWords } = require('../../constant/titleFixer');
 
 let count = 0;
 
@@ -49,13 +49,13 @@ const standardizedGeneralFormat = (myTitle) => {
   return newTitleArray;
 };
 
-const checkParticleConjectionWords = (words) => {
+const checkParticleWords = (words) => {
   if (count === 0) {
     count++;
     return capsMe(words);
   }
 
-  const checkWordCondition = particleConjuctionsWords.includes(words);
+  const checkWordCondition = particleWords.includes(lowerMe(words));
 
   if (!checkWordCondition) return capsMe(words);
   return lowerMe(words);
@@ -69,7 +69,7 @@ const fixMyTitle = (myTitle) => {
   return standardizedTitle
     .map((element) =>
       !element.includes('-')
-        ? checkParticleConjectionWords(element)
+        ? checkParticleWords(element)
         : capsTheFirstRepetition(element)
     )
     .join(' ');
