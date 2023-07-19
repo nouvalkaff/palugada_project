@@ -31,11 +31,18 @@ const updateHitUniqueCharacter = async (data) => {
   return client.query(query, params);
 };
 
+const deleteURLById = async (id) => {
+  const query = 'DELETE FROM shrinkurl WHERE id = $1;';
+  const params = [id];
+  return client.query(query, params);
+};
+
 module.exports = {
   shrinkUrl: {
     getAllDataFromShrinkURL,
     isUnixCharactersExist,
     saveDataToDB,
-    updateHitUniqueCharacter
+    updateHitUniqueCharacter,
+    deleteURLById
   }
 };

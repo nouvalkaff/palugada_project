@@ -13,6 +13,11 @@ function isMyURLValid(URL) {
   }
 }
 
+async function deleteTheUrlById(id) {
+  const deletedId = await shrinkUrl.deleteURLById(id);
+  return deletedId;
+}
+
 async function isUniqueCharsExist(uniqChars) {
   const isExist = await shrinkUrl.isUnixCharactersExist(uniqChars);
   if (isEmpty(isExist)) return false;
@@ -91,5 +96,6 @@ module.exports = {
   saveToDB,
   checkMyUniqChars,
   isUniqueCharsExist,
-  getAllData
+  getAllData,
+  deleteTheUrlById
 };

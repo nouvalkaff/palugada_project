@@ -3,12 +3,15 @@ const router = Router();
 const {
   shrinkTheURL,
   redirectToRealURL,
-  getAllURLs
+  getAllURLs,
+  deleteUrl
 } = require('./controllers');
 
 router.post('/doit', shrinkTheURL);
 
-router.get('/all', getAllURLs);
+router.get('/all/:secretKey', getAllURLs);
+
+router.delete('/delete/:secretKey/:id', deleteUrl);
 
 // redirect route must be at the very bottom
 router.get('/:id', redirectToRealURL);
