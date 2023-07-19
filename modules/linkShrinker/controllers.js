@@ -3,18 +3,29 @@ const {
   saveToDB,
   checkMyUniqChars,
   isUniqueCharsExist,
-  getAllData
+  getAllData,
+  deleteTheUrlById
 } = require('./helper_function');
 const uniqueCharLength = process.env.CHAR_LENGTH;
 
-exports.getAllURLs = async (_, res) => {
+exports.getAllURLs = async (req, res) => {
   try {
+    if (req.params.secretKey !== process.env.SECRET_KEY) {
+      return res.status(401).send({
+        code: 401,
+        codeMessage: 'Bad Request',
+        success: false,
+        message: 'Wrong secret key'
+      });
+    }
+
     const allData = await getAllData();
     return res.status(200).send({
       code: 200,
       codeMessage: 'OK',
       success: true,
       message: 'Succesfully get all data from database',
+      count: allData.length,
       data: allData
     });
   } catch (error) {
@@ -52,7 +63,7 @@ exports.redirectToRealURL = async (req, res) => {
 
 exports.shrinkTheURL = async (req, res) => {
   try {
-    const longURL = req.body.url;
+    const { url: longURL, simple } = req.query;
 
     // field url cannot be empty or undefined
     if (!longURL) {
@@ -94,6 +105,12 @@ exports.shrinkTheURL = async (req, res) => {
     const savedData = await saveToDB(longURL, uniqChar);
 
     if (savedData === true) {
+      if (simple === '1') {
+        return res.status(200).send({
+          ['Your short URL']: shortenURL
+        });
+      }
+
       return res.status(200).send({
         code: 200,
         codeMessage: 'OK',
@@ -103,6 +120,44 @@ exports.shrinkTheURL = async (req, res) => {
         urlShrinked: shortenURL
       });
     }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+      code: 500,
+      codeMessage: 'Internal Server Error',
+      success: false
+    });
+  }
+};
+
+exports.deleteUrl = async (req, res) => {
+  try {
+    const { secretKey, id } = req.params;
+
+    if (secretKey !== process.env.SECRET_KEY) {
+      return res.status(401).send({
+        code: 401,
+        codeMessage: 'Bad Request',
+        success: false,
+        message: 'Wrong secret key'
+      });
+    }
+
+    const isSeparatorExists = id.includes(',');
+
+    if (isSeparatorExists) {
+      const separatedId = id.split(',');
+      for (let id of separatedId) await deleteTheUrlById(id);
+    } else {
+      await deleteTheUrlById(id);
+    }
+
+    return res.status(200).send({
+      code: 200,
+      codeMessage: 'OK',
+      success: true,
+      message: `ID ${id} is deleted successfully`
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send({
