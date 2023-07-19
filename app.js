@@ -6,7 +6,7 @@ const Express = require('express');
 
 // Declare other essential packages
 const Cors = require('cors');
-const port = process.env.DEV_PORT || process.env.PROD_PORT || 1927;
+const port = process.env.DEV_PORT || process.env.PROD_PORT;
 
 // Declare app variable to allow in creating other essential functions
 const app = Express();
@@ -53,6 +53,13 @@ app.all('*', (_, res) => {
   });
 });
 
-connection();
+const connectDb = new Promise((resolve) => {
+  resolve(connection());
+});
+
+connectDb.catch((error) => {
+  throw 'Error connecting to database, message' + error;
+});
+
 app.listen(port);
 // =======
