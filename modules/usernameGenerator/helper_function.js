@@ -1,4 +1,5 @@
 const fs = require('fs');
+const fetch = require('node-fetch');
 
 const { RAND_QUERY, CONNECTOR } = require('../../constant/usernameGen');
 const {

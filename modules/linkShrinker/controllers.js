@@ -109,7 +109,7 @@ exports.shrinkTheURL = async (req, res) => {
         return res
           .setHeader('Content-type', 'text/html')
           .status(200)
-          .send(` Please save your short URL ==> <b>${shortenURL}</b> `);
+          .send(` Please save your short URL ==> ${shortenURL} <==`);
       }
 
       return res.status(200).send({
