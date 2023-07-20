@@ -89,7 +89,8 @@ exports.shrinkTheURL = async (req, res) => {
         code: 400,
         codeMessage: 'Bad Request',
         success: false,
-        message: 'Please input valid URL format.'
+        message:
+          'Please input valid URL format ==> https://www.example.com <== [minimal URL has protocol {http/https} and hostname {www.example.com}]'
       });
     }
 
