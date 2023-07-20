@@ -7,7 +7,7 @@ const {
   deleteUrl
 } = require('./controllers');
 
-router.post('/doit', shrinkTheURL);
+router.get('/doit', shrinkTheURL);
 
 router.get('/all/:secretKey', getAllURLs);
 
