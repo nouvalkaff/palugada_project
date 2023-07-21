@@ -3,7 +3,7 @@
 PALUGADA = aPALu maU Gua ADA
 
 ```
-  NodeJS version 18.12.1 or up
+  NodeJS version 16.20.0 or up
 ```
 
 An API project by Mohamad Nouval Abdel Alkaf. This API has five features available, like:
@@ -13,10 +13,14 @@ An API project by Mohamad Nouval Abdel Alkaf. This API has five features availab
     3. Random Animal Generator (Generate you a set of random animal name variation).
     4. Git Commit Maker (Ease you in creating GIT commit message in list format).
     5. Username Generator (Generate you an unexpected username for social media or game in swift manner).
+    6. Fidyah Calculator (Calculate your fidyah as easy as clicking a button).
+    7. Title Fixer (Benerin judul karya ilmiahmu sesuai dengan PUEBI - Pedoman Umum Ejaan Bahasa Indonesia)
 
 ## Authors
 
-- [@nouvalkaff](https://github.com/nouvalkaff)
+- [M Nouval A Alkaf - LinkedIn](https://www.linkedin.com/in/nouvalkaff/)
+- [@nouvalkaff - Github](https://github.com/nouvalkaff)
+- [@nouvalkaf - Instagram](https://www.instagram.com/nouvalkaf/)
 
 ## Documentation
 
@@ -70,12 +74,13 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 ##### 1. Shrinker
 
 ```http
-  POST /api/palugada/shrinker/doit
+  GET /api/palugada/shrinker/doit
 ```
 
-| Body  | Type     | Description                          |
-| :---- | :------- | :----------------------------------- |
-| `url` | `string` | **Required**. Original long link/URL |
+| Query    | Type     | Description                                     |
+| :------- | :------- | :---------------------------------------------- |
+| `simple` | `string` | **Required**. 0 = false & 1 = true              |
+| `url`    | `string` | **Required**. Change 'XYZ' with really long URL |
 
 ##### 2. Redirect
 
@@ -88,6 +93,21 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 ```http
   GET /api/palugada/shrinker/all
 ```
+
+| Params      | Type     | Description   |
+| :---------- | :------- | :------------ |
+| `secretKey` | `string` | **Required**. |
+
+##### 4. Delete URL by ID
+
+```http
+  DELETE /api/palugada/shrinker/delete
+```
+
+| Params      | Type     | Description                               |
+| :---------- | :------- | :---------------------------------------- |
+| `secretKey` | `string` | **Required**.                             |
+| `id`        | `string` | **Required**. Use ',' as the ID separator |
 
 #### Generate Random Set of Number
 
@@ -159,6 +179,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `preset`       | `string` | **Required**. string input as username preset |
 | `useConnector` | `string` | **Required**. 0 = false, 1 = true             |
 | `firstSet`     | `string` | **Required**. caps, upper, lower              |
+| `simple`       | `string` | **Required**. 0 = false, 1 = true             |
 
 #### Smart Commit Maker
 
@@ -174,8 +195,34 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `bullet`   | `string` | **Required**. number, arrowTail0, arrowTail1, arrowTail2, point |
 | `oneLiner` | `string` | **Required**. 0 = false, 1 = true                               |
 
-| Body            | Type     | Description                                                                                                                                          |
-| :-------------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `branch`        | `string` | **Required**. Pushed branch name                                                                                                                     |
-| `headComment` | `object` | **Required**. Detail of commit message. Maximum is five. Example: { "issueKey":[],"time":{"days":"","hours":"","minutes":""},"transition":"" } |
-| `detailComment`   | `string` | **Optional**. { "comment1":"Change three file names into camel case","comment2":"","comment3":"","comment4":"","comment5":"" }  |
+| Body            | Type     | Description                                                                                                                                    |
+| :-------------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| `branch`        | `string` | **Required**. Pushed branch name                                                                                                               |
+| `headComment`   | `object` | **Required**. Detail of commit message. Maximum is five. Example: { "issueKey":[],"time":{"days":"","hours":"","minutes":""},"transition":"" } |
+| `detailComment` | `string` | **Optional**. { "comment1":"Change three file names into camel case","comment2":"","comment3":"","comment4":"","comment5":"" }                 |
+
+##### 1. Fidyah Calculator
+
+```http
+  POST /api/palugada/hitung-fidyah
+```
+
+| Query    | Type     | Description                                                                  |
+| :------- | :------- | :--------------------------------------------------------------------------- |
+| `oldill` | `string` | **Required**. 0 = false, 1 = true (1 Untuk perhitungan Orang tua atau Sakit) |
+
+| Body   | Type              | Description   |
+| :----- | :---------------- | :------------ |
+| `year` | `object (number)` | **Required**. |
+| `days` | `object (number)` | **Required**. |
+
+##### 1. Title Fixer
+
+```http
+  GET /api/palugada/benerinjudul
+```
+
+| Query    | Type     | Description                                                 |
+| :------- | :------- | :---------------------------------------------------------- |
+| `judul`  | `string` | **Required**. Ubah 'XYZ' dengan judul yang ingin diperbaiki |
+| `simple` | `string` | **Required**. 0 = false & 1 = true                          |
