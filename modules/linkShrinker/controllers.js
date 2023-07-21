@@ -146,6 +146,15 @@ exports.createCustomURL = async (req, res) => {
       });
     }
 
+    if (!customPrefix || !longURL) {
+      return res.status(401).send({
+        code: 401,
+        codeMessage: 'Bad Request',
+        success: false,
+        message: 'customPrefix or url cannot be empty'
+      });
+    }
+
     const [customUrl, status] = await processAndValidateMyCustomUrl(
       longURL,
       customPrefix
@@ -161,9 +170,6 @@ exports.createCustomURL = async (req, res) => {
       });
     }
 
-    // const savedData = await saveToDB(longURL, customPrefix);
-
-    // if (savedData === true)
     return res
       .setHeader('Content-type', 'text/html')
       .status(200)
