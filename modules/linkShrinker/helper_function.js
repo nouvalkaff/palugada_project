@@ -1,17 +1,14 @@
-const URL_PKG = require('url').URL;
+const joi = require('joi');
 const isEmpty = require('lodash/isEmpty');
 const { RANDOM_CHARS } = require('../../constant/urlShrinker');
 const { shrinkUrl } = require('../../database/executor');
 const DOMAIN = process.env.DOMAIN;
 
 function isMyURLValid(URL) {
-  try {
-    console.log(URL, 'URL==============');
-    console.log(new URL_PKG(URL), 'new URL_PKG(URL)==============');
-    if (URL === new URL_PKG(URL).origin) return true;
-  } catch (error) {
-    return false;
-  }
+  const schemaUri = joi.string().uri().required();
+  const validateUri = schemaUri.validate(URL);
+  if (validateUri.error) return false;
+  return true;
 }
 
 async function deleteTheUrlById(id) {
@@ -99,9 +96,7 @@ async function processAndValidateMyCustomUrl(longURL, customPrefix) {
   const urlValidity = isMyURLValid(longURL);
 
   if (isDuplicate.length) customUrl = `${DOMAIN}${isDuplicate[0].uniquechar}`;
-  else {
-    customUrl = `${DOMAIN}${customPrefix}`;
-  }
+  else customUrl = `${DOMAIN}${customPrefix}`;
 
   if (urlValidity) await saveToDB(longURL, customPrefix);
   return [customUrl, urlValidity];
