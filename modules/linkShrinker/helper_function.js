@@ -99,6 +99,11 @@ async function processAndValidateMyCustomUrl(longURL, customPrefix) {
     await saveToDB(longURL, customPrefix);
     customUrl = `${DOMAIN}${customPrefix}`;
   }
+
+  console.log(
+    [customUrl, isMyURLValid(longURL)],
+    '================================================'
+  );
   return [customUrl, isMyURLValid(longURL)];
 }
 
