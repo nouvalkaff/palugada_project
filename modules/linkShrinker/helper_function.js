@@ -94,15 +94,16 @@ async function getAllData() {
 
 async function processAndValidateMyCustomUrl(longURL, customPrefix) {
   let customUrl;
+  const urlValidity = isMyURLValid(longURL);
   let isDuplicate = await shrinkUrl.isUnixCharactersExist(customPrefix);
 
   if (isDuplicate.length) customUrl = `${DOMAIN}${isDuplicate[0].uniquechar}`;
   else {
-    await saveToDB(longURL, customPrefix);
     customUrl = `${DOMAIN}${customPrefix}`;
   }
 
-  return [customUrl, isMyURLValid(longURL)];
+  if (urlValidity) await saveToDB(longURL, customPrefix);
+  return [customUrl, urlValidity];
 }
 
 module.exports = {
