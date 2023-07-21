@@ -7,6 +7,7 @@ const DOMAIN = process.env.DOMAIN;
 function isMyURLValid(URL) {
   const schemaUri = joi.string().uri().required();
   const validateUri = schemaUri.validate(URL);
+  console.log(validateUri, 'validateUri');
   if (validateUri.error) return false;
   return true;
 }
