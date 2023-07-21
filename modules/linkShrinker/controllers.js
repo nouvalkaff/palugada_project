@@ -136,8 +136,6 @@ exports.shrinkTheURL = async (req, res) => {
 exports.createCustomURL = async (req, res) => {
   try {
     const { url: longURL, customPrefix, skurl } = req.query;
-    console.log(req.query.url, 'req.query.url');
-    console.log(longURL, 'longURL');
 
     if (skurl !== process.env.SK_URL) {
       return res.status(401).send({
