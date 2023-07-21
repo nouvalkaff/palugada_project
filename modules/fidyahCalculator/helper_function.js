@@ -3,6 +3,7 @@ const {
   formatNumber,
   toInt
 } = require('../general_function_helper');
+const currency = process.env.FIDYAH_CURRENCY;
 
 const errorMessage =
   "Input 'year' tidak bisa melebihi tahun di waktu sekarang.";
@@ -61,7 +62,29 @@ exports.calculateFidyah = async (rate, req) => {
     }
   }
 
-  return String(rate).includes('.')
-    ? fidyahPaid.toFixed(2)
-    : formatNumber(fidyahPaid);
+  let result;
+  let totalFidyah;
+  let bayarFidyah = `${currency} `;
+  let qadhaPuasa = 0;
+
+  if (+query.oldill === 1) {
+    totalFidyah = String(rate).includes('.')
+      ? fidyahPaid.toFixed(2)
+      : formatNumber(fidyahPaid);
+
+    bayarFidyah += totalFidyah;
+
+    result = { bayarFidyah, qadhaPuasa };
+  } else {
+    totalFidyah = String(rate).includes('.')
+      ? fidyahPaid.toFixed(2)
+      : formatNumber(fidyahPaid);
+
+    bayarFidyah += totalFidyah;
+    qadhaPuasa = body.reduce((a, b) => a + b.days, 0);
+
+    result = { bayarFidyah, qadhaPuasa };
+  }
+
+  return result;
 };
