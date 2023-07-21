@@ -6,7 +6,7 @@ PALUGADA = aPALu maU Gua ADA
   NodeJS version 16.20.0 or up
 ```
 
-An API project by Mohamad Nouval Abdel Alkaf. This API has five features available, like:
+An API project by Mohamad Nouval Abdel Alkaf. This API has seven features available:
 
     1. Link Shrinker (Shorten your really long link / URL to only three unique characters).
     2. Random Number Generator (Generate you a set of random number variation).
