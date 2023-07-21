@@ -5,12 +5,15 @@ const {
   redirectToRealURL,
   createCustomURL,
   getAllURLs,
+  createCustomURLWithPayload,
   deleteUrl
 } = require('./controllers');
 
 router.get('/doit', shrinkTheURL);
 
 router.get('/custom', createCustomURL);
+
+router.get('/custom-payload', createCustomURLWithPayload);
 
 router.get('/all/:secretKey', getAllURLs);
 

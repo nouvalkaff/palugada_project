@@ -184,6 +184,57 @@ exports.createCustomURL = async (req, res) => {
   }
 };
 
+exports.createCustomURLWithPayload = async (req, res) => {
+  try {
+    const { url: longURL, customPrefix, skurl } = req.body;
+
+    if (skurl !== process.env.SK_URL) {
+      return res.status(401).send({
+        code: 401,
+        codeMessage: 'Bad Request',
+        success: false,
+        message: 'Wrong secret key'
+      });
+    }
+
+    if (!customPrefix || !longURL) {
+      return res.status(401).send({
+        code: 401,
+        codeMessage: 'Bad Request',
+        success: false,
+        message: 'customPrefix or url cannot be empty or undefined'
+      });
+    }
+
+    const [customUrl, status] = await processAndValidateMyCustomUrl(
+      longURL,
+      customPrefix
+    );
+
+    if (status === false) {
+      return res.status(400).send({
+        code: 400,
+        codeMessage: 'Bad Request',
+        success: false,
+        message:
+          'Please input valid URL format ==> https://www.example.com <== [minimal URL has protocol {http/https} and hostname {www.example.com}]'
+      });
+    }
+
+    return res
+      .setHeader('Content-type', 'text/html')
+      .status(200)
+      .send(` Please save your short URL ==> ${customUrl} <==`);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+      code: 500,
+      codeMessage: 'Internal Server Error',
+      success: false
+    });
+  }
+};
+
 exports.deleteUrl = async (req, res) => {
   try {
     const { secretKey, id } = req.params;
