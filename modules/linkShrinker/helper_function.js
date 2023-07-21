@@ -6,8 +6,7 @@ const DOMAIN = process.env.DOMAIN;
 
 function isMyURLValid(URL) {
   try {
-    const checkMyURL = new URL_PKG(URL);
-    if (URL === checkMyURL.href) return true;
+    if (URL === new URL_PKG(URL).origin) return true;
   } catch (error) {
     return false;
   }
@@ -91,10 +90,23 @@ async function getAllData() {
   return shrinkUrl.getAllDataFromShrinkURL();
 }
 
+async function processAndValidateMyCustomUrl(longURL, customPrefix) {
+  let customUrl;
+  let isDuplicate = await shrinkUrl.isUnixCharactersExist(customPrefix);
+
+  if (isDuplicate.length) customUrl = `${DOMAIN}${isDuplicate[0].uniquechar}`;
+  else {
+    await saveToDB(longURL, customPrefix);
+    customUrl = `${DOMAIN}${customPrefix}`;
+  }
+  return [customUrl, isMyURLValid(longURL)];
+}
+
 module.exports = {
   ShrinkMyLongURLPlease,
   saveToDB,
   checkMyUniqChars,
+  processAndValidateMyCustomUrl,
   isUniqueCharsExist,
   getAllData,
   deleteTheUrlById

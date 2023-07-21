@@ -4,7 +4,6 @@ const rate = process.env.FIDYAH_RATE;
 exports.fidyahController = async (req, res) => {
   try {
     const data = await calculateFidyah(rate, req);
-    // console.log(data);
 
     return res.status(200).send({
       code: 200,
