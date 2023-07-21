@@ -6,7 +6,6 @@ const DOMAIN = process.env.DOMAIN;
 
 function isMyURLValid(URL) {
   try {
-    console.log(URL, 'URL==============');
     console.log(new URL_PKG(URL), 'new URL_PKG(URL)==============');
     if (URL === new URL_PKG(URL).origin) return true;
   } catch (error) {
