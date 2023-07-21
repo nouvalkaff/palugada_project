@@ -109,6 +109,18 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `secretKey` | `string` | **Required**.                             |
 | `id`        | `string` | **Required**. Use ',' as the ID separator |
 
+##### 5. Custom Prefix
+
+```http
+  GET /api/palugada/shrinker/custom
+```
+
+| Query          | Type     | Description                       |
+| :------------- | :------- | :-------------------------------- |
+| `skurl`        | `string` | **Required**.                     |
+| `customPrefix` | `string` | **Required**. Input custom prefix |
+| `url`          | `string` | **Required**. Really long URL     |
+
 #### Generate Random Set of Number
 
 ##### 1. Generate Number

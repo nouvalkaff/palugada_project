@@ -151,7 +151,7 @@ exports.createCustomURL = async (req, res) => {
         code: 401,
         codeMessage: 'Bad Request',
         success: false,
-        message: 'customPrefix or url cannot be empty'
+        message: 'customPrefix or url cannot be empty or undefined'
       });
     }
 
