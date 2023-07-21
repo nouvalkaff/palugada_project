@@ -10,7 +10,7 @@ exports.fidyahController = async (req, res) => {
       codeMessage: 'OK',
       success: true,
       message: 'Di bawah ini adalah total fidyah yang harus kamu bayarkan.',
-      totalBayar: `Rp ${data}`
+      totalBayar: data
     });
   } catch (error) {
     console.error(error);
