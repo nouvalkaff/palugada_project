@@ -137,6 +137,10 @@ exports.createCustomURL = async (req, res) => {
   try {
     const { url: longURL, customPrefix, skurl } = req.query;
 
+    console.log(longURL, 'longURL');
+    console.log(skurl, 'skurl');
+    console.log(process.env.SK_URL, 'process.env.SK_URL');
+
     if (skurl !== process.env.SK_URL) {
       return res.status(401).send({
         code: 401,

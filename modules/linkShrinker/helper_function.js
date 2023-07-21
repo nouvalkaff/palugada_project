@@ -6,6 +6,7 @@ const DOMAIN = process.env.DOMAIN;
 
 function isMyURLValid(URL) {
   try {
+    console.log(URL, 'URL==============');
     console.log(new URL_PKG(URL), 'new URL_PKG(URL)==============');
     if (URL === new URL_PKG(URL).origin) return true;
   } catch (error) {
@@ -93,8 +94,9 @@ async function getAllData() {
 
 async function processAndValidateMyCustomUrl(longURL, customPrefix) {
   let customUrl;
-  const urlValidity = isMyURLValid(longURL);
   let isDuplicate = await shrinkUrl.isUnixCharactersExist(customPrefix);
+
+  const urlValidity = isMyURLValid(longURL);
 
   if (isDuplicate.length) customUrl = `${DOMAIN}${isDuplicate[0].uniquechar}`;
   else {
