@@ -11,8 +11,15 @@ exports.genAnimal = (req, res) => {
         code: 400,
         codeMessage: 'Bad Request',
         success: false,
-        message: `The current animals data length is ${data} while user request is ${format.length}`
+        message: `The current animals in database is ${data} while user request is ${format.length}`
       });
+    }
+
+    if (+format.simple === 1) {
+      return res
+        .setHeader('Content-type', 'text/html')
+        .status(200)
+        .send(`==> ${data} <==`);
     }
 
     return res.status(200).send({

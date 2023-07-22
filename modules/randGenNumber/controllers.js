@@ -5,6 +5,13 @@ exports.genNumber = (req, res) => {
     let format = req.query;
     const { maxnum, length } = format;
 
+    if (+format.simple === 1) {
+      return res
+        .setHeader('Content-type', 'text/html')
+        .status(200)
+        .send(`==> ${generateNumber(format)} <==`);
+    }
+
     if (maxnum > 10000 || length > 2000) {
       return res.status(400).send({
         code: 400,
