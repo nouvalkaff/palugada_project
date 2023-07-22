@@ -1,3 +1,5 @@
+const decode = require('urldecode');
+
 const {
   ShrinkMyLongURLPlease,
   saveToDB,
@@ -7,6 +9,7 @@ const {
   processAndValidateMyCustomUrl,
   deleteTheUrlById
 } = require('./helper_function');
+
 const uniqueCharLength = process.env.CHAR_LENGTH;
 
 exports.getAllURLs = async (req, res) => {
@@ -135,7 +138,11 @@ exports.shrinkTheURL = async (req, res) => {
 
 exports.createCustomURL = async (req, res) => {
   try {
-    const { url: longURL, customPrefix, skurl } = req.query;
+    const { url, customPrefix, skurl } = req.query;
+
+    const longURL = decode(url);
+
+    console.log(longURL, 'longURLlongURL');
 
     if (skurl !== process.env.SK_URL) {
       return res.status(401).send({
