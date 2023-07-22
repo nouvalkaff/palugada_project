@@ -26,6 +26,14 @@ An API project by Mohamad Nouval Abdel Alkaf. This API has seven features availa
 
 [Postman: Palugada Project](https://documenter.getpostman.com/view/23758510/2s8YKGifv5)
 
+## Quick Access
+
+| Feature                               | URL                                          | Description                                           |
+| :------------------------------------ | :------------------------------------------- | :---------------------------------------------------- |
+| `Generate Numbers`                    | `https://plgda.cyclic.app/GnrtNumber4Me`     | Generate a set of 10 random numbers (max 100,000)     |
+| `Generate Animals (Bahasa Indonesia)` | `https://plgda.cyclic.app/GnrtAnimalBInd4Me` | Generate a set of 10 animal names in Bahasa Indonesia |
+| `Generate Animals (English)`          | `https://plgda.cyclic.app/GnrtAnimalEng4Me`  | Generate a set of 10 animal names in English          |
+
 ## Run Locally
 
 Clone Palugada Project
