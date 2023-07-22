@@ -67,7 +67,9 @@ exports.redirectToRealURL = async (req, res) => {
 
 exports.shrinkTheURL = async (req, res) => {
   try {
-    const { url: longURL, simple } = req.query;
+    const { url, simple } = req.query;
+
+    const longURL = decode(url);
 
     // field url cannot be empty or undefined
     if (!longURL) {
@@ -142,8 +144,6 @@ exports.createCustomURL = async (req, res) => {
 
     const longURL = decode(url);
 
-    console.log(longURL, 'longURLlongURL');
-
     if (skurl !== process.env.SK_URL) {
       return res.status(401).send({
         code: 401,
@@ -193,7 +193,9 @@ exports.createCustomURL = async (req, res) => {
 
 exports.createCustomURLWithPayload = async (req, res) => {
   try {
-    const { url: longURL, customPrefix, skurl } = req.body;
+    const { url, customPrefix, skurl } = req.body;
+
+    const longURL = decode(url);
 
     if (skurl !== process.env.SK_URL) {
       return res.status(401).send({
