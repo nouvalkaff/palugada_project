@@ -121,6 +121,18 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | `customPrefix` | `string` | **Required**. Input custom prefix |
 | `url`          | `string` | **Required**. Really long URL     |
 
+##### 5. Custom Prefix
+
+```http
+  GET /api/palugada/shrinker/custom-payload
+```
+
+| Body           | Type              | Description                       |
+| :------------- | :---------------- | :-------------------------------- |
+| `skurl`        | `object (string)` | **Required**.                     |
+| `customPrefix` | `object (string)` | **Required**. Input custom prefix |
+| `url`          | `object (string)` | **Required**. Really long URL     |
+
 #### Generate Random Set of Number
 
 ##### 1. Generate Number
