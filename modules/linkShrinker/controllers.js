@@ -162,10 +162,8 @@ exports.createCustomURL = async (req, res) => {
       });
     }
 
-    const [customUrl, status] = await processAndValidateMyCustomUrl(
-      longURL,
-      customPrefix
-    );
+    const [customUrl, status, notifDuplicate] =
+      await processAndValidateMyCustomUrl(longURL, customPrefix);
 
     if (status === false) {
       return res.status(400).send({
@@ -177,10 +175,18 @@ exports.createCustomURL = async (req, res) => {
       });
     }
 
+    let resMessage;
+
+    if (notifDuplicate === true) {
+      resMessage = `==> ${customUrl} <== short URL already taken`;
+    } else {
+      resMessage = ` Please save your short URL ==> ${customUrl} <==`;
+    }
+
     return res
       .setHeader('Content-type', 'text/html')
       .status(200)
-      .send(` Please save your short URL ==> ${customUrl} <==`);
+      .send(resMessage);
   } catch (error) {
     console.error(error);
     return res.status(500).send({

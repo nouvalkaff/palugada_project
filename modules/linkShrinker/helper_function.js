@@ -99,9 +99,11 @@ async function processAndValidateMyCustomUrl(longURL, customPrefix) {
   if (isDuplicate.length) {
     customUrl = `${DOMAIN}${isDuplicate[0].uniquechar}`;
     notifDuplicate = true;
-  } else customUrl = `${DOMAIN}${customPrefix}`;
+  } else {
+    customUrl = `${DOMAIN}${customPrefix}`;
+    if (urlValidity) await saveToDB(longURL, customPrefix);
+  }
 
-  if (urlValidity) await saveToDB(longURL, customPrefix);
   return [customUrl, urlValidity, notifDuplicate];
 }
 
