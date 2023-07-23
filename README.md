@@ -243,7 +243,7 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 
 | Query    | Type     | Description                                                          |
 | :------- | :------- | :------------------------------------------------------------------- |
-| `oldill` | `string` | **Required**. 0 = false, 1 = true (1 Untuk perhitungan lansia/sakit) |
+| `oldill` | `string` | **Required**. 0 = false, 1 = true (1 untuk perhitungan lansia/sakit) |
 
 | Body   | Type              | Description   |
 | :----- | :---------------- | :------------ |
