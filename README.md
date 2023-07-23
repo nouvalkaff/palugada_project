@@ -241,9 +241,9 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
   POST /api/palugada/hitung-fidyah
 ```
 
-| Query    | Type     | Description                                                                  |
-| :------- | :------- | :--------------------------------------------------------------------------- |
-| `oldill` | `string` | **Required**. 0 = false, 1 = true (1 Untuk perhitungan Orang tua atau Sakit) |
+| Query    | Type     | Description                                                          |
+| :------- | :------- | :------------------------------------------------------------------- |
+| `oldill` | `string` | **Required**. 0 = false, 1 = true (1 Untuk perhitungan lansia/sakit) |
 
 | Body   | Type              | Description   |
 | :----- | :---------------- | :------------ |
