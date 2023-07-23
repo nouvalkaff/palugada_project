@@ -9,7 +9,9 @@ exports.titleFixer = (req, res) => {
     return res
       .setHeader('Content-type', 'text/html')
       .status(200)
-      .send(` Selesai, mohon cek lagi ==> ${fixedTitle} <==`);
+      .send(
+        ` Hasil mungkin belum sempurna, mohon cek kembali ==> ${fixedTitle} <==`
+      );
   }
 
   return res.status(200).send({
