@@ -23,7 +23,7 @@ exports.getAllURLs = async (req, res) => {
       });
     }
 
-    const allData = await getAllData();
+    const allData = await getAllData(req);
     return res.status(200).send({
       code: 200,
       codeMessage: 'OK',

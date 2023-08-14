@@ -85,8 +85,11 @@ async function saveToDB(longURL, uniqueChars) {
   }
 }
 
-async function getAllData() {
-  return shrinkUrl.getAllDataFromShrinkURL();
+async function getAllData(req) {
+  let allData = await shrinkUrl.getAllDataFromShrinkURL();
+  return allData.map((each) => {
+    return { ...each, shortUrl: `${req.headers.host}/${each.uniquechar}` };
+  });
 }
 
 async function processAndValidateMyCustomUrl(longURL, customPrefix) {
