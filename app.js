@@ -35,7 +35,7 @@ const titleFixRoute = require('./modules/titleFixer/routers.js');
 //
 
 app.use('', shrinkerRoute);
-app.use('/api/palugada', fidyahCalculatorRoute);
+app.use('/api/palugada/fidyah', fidyahCalculatorRoute);
 app.use('/api/palugada/shrinker', shrinkerRoute);
 app.use('/api/palugada/rgnum', randGenNumRoute);
 app.use('/api/palugada/rgani', randGenAniRoute);

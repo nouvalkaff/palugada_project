@@ -37,6 +37,14 @@ const deleteURLById = async (id) => {
   return client.query(query, params);
 };
 
+const addUserFidyah = async (data) => {
+  const { name, email, phone_num: phoneNum } = data;
+  const query =
+    'INSERT INTO user_fidyah (name, email, phone_num) VALUES ($1, $2, $3);';
+  const params = [name, email, phoneNum];
+  return client.query(query, params);
+};
+
 module.exports = {
   shrinkUrl: {
     getAllDataFromShrinkURL,
@@ -44,5 +52,8 @@ module.exports = {
     saveDataToDB,
     updateHitUniqueCharacter,
     deleteURLById
+  },
+  fidyah: {
+    addUserFidyah
   }
 };
