@@ -45,6 +45,16 @@ const addUserFidyah = async (data) => {
   return client.query(query, params);
 };
 
+const checkUserFidyahByEmail = async (data) => {
+  const { email } = data;
+  const query =
+    'SELECT email FROM user_fidyah where LOWER(email) = LOWER($1) LIMIT 1;';
+  const params = [email];
+  const executeQuery = await client.query(query, params);
+  const { rowCount } = executeQuery;
+  return rowCount;
+};
+
 module.exports = {
   shrinkUrl: {
     getAllDataFromShrinkURL,
@@ -54,6 +64,7 @@ module.exports = {
     deleteURLById
   },
   fidyah: {
-    addUserFidyah
+    addUserFidyah,
+    checkUserFidyahByEmail
   }
 };

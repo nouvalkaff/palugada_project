@@ -27,17 +27,27 @@ exports.fidyahController = async (req, res) => {
 
 exports.tambahUserController = async (req, res) => {
   try {
+    let message;
     const payload = req.body;
+    const { email } = payload;
 
     validateUserFidyah(payload);
 
-    await fidyah.addUserFidyah(payload);
+    const isEmailExist = await fidyah.checkUserFidyahByEmail(payload);
+
+    if (!isEmailExist) {
+      await fidyah.addUserFidyah(payload);
+      message =
+        'User baru pada module kalkulator fidyah berhasil ditambahkan. Silakan lanjut';
+    } else {
+      message = `User dengan email ${email} sudah ada di database. Silakan lanjut.`;
+    }
 
     return res.status(200).send({
       code: 200,
       codeMessage: 'OK',
       success: true,
-      message: 'User baru pada module kalkulator fidyah berhasil ditambahkan.'
+      message
     });
   } catch (error) {
     console.error(error);
