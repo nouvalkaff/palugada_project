@@ -260,3 +260,5 @@ CREATE INDEX UNIQCHAR_REFF ON shrinkurl (uniqueChar);
 | :------- | :------- | :---------------------------------------------------------- |
 | `judul`  | `string` | **Required**. Ubah 'XYZ' dengan judul yang ingin diperbaiki |
 | `simple` | `string` | **Required**. 0 = false & 1 = true                          |
+
+// =================================================================
