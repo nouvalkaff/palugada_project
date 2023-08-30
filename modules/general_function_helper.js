@@ -271,10 +271,10 @@ const phoneNumErrorMessage =
 
 const errorMessageSimplifier = (error) => {
   const detailErr = error.message;
-  console.log(detailErr);
   if (detailErr.includes('/^[a-zA-Z]{3,50}$/')) return nameErrorMessage;
   if (detailErr.includes('must be a valid email')) return emailErrorMessage;
   if (detailErr.includes('/^[0-9]{9,13}$/')) return phoneNumErrorMessage;
+  return detailErr;
 };
 
 const validateUserFidyah = (object) => {
@@ -294,6 +294,8 @@ const validateUserFidyah = (object) => {
   return true;
 };
 
+const queryInFormatter = (query) => `${query.replace(/\,/g, ', ')}`;
+
 module.exports = {
   array2string,
   capsMe,
@@ -303,6 +305,7 @@ module.exports = {
   getIdnYear,
   handleDuplicate,
   lowerMe,
+  queryInFormatter,
   shuffle,
   smartCommitHandler,
   sorting,
