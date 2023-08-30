@@ -1,3 +1,5 @@
+const Joi = require('joi');
+const isEmpty = require('lodash/isEmpty');
 const { bullets, commands } = require('../constant/commitMaker');
 const { arrowTail0, arrowTail1, arrowTail2, point } = bullets;
 const { COMMIT_COMMAND, NEXT_MESSAGE } = commands;
@@ -259,6 +261,41 @@ const smartCommitHandler = (object) => {
   return commitMessages;
 };
 
+const nameErrorMessage =
+  'Cek kembali input nama anda. Nama harus terdiri dari 3 - 50 huruf.';
+
+const emailErrorMessage = 'Format email salah, cek kembali email anda.';
+
+const phoneNumErrorMessage =
+  'Format nomor telpon salah. Harus terdiri dari 9 - 13 angka dan tidak boleh memiliki huruf / tambahan karakter.';
+
+const errorMessageSimplifier = (error) => {
+  const detailErr = error.message;
+  if (detailErr.includes('/^[a-zA-Z]{3,50}$/')) return nameErrorMessage;
+  if (detailErr.includes('must be a valid email')) return emailErrorMessage;
+  if (detailErr.includes('/^[0-9]{9,13}$/')) return phoneNumErrorMessage;
+  return detailErr;
+};
+
+const validateUserFidyah = (object) => {
+  const schema = Joi.object({
+    name: Joi.string()
+      .pattern(/^[a-zA-Z]{3,50}$/)
+      .required(),
+    email: Joi.string().email().required(),
+    phone_num: Joi.string()
+      .pattern(/^[0-9]{9,13}$/)
+      .required()
+  });
+
+  const isNotValid = schema.validate(object).error;
+
+  if (isNotValid) throw new Error(errorMessageSimplifier(isNotValid));
+  return true;
+};
+
+const queryInFormatter = (query) => `${query.replace(/\,/g, ', ')}`;
+
 module.exports = {
   array2string,
   capsMe,
@@ -268,9 +305,11 @@ module.exports = {
   getIdnYear,
   handleDuplicate,
   lowerMe,
+  queryInFormatter,
   shuffle,
   smartCommitHandler,
   sorting,
   toInt,
-  upperMe
+  upperMe,
+  validateUserFidyah
 };
