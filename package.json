@@ -8,6 +8,9 @@
     "start": "node app.js",
     "start-dev": "nodemon app.js"
   },
+  "jest": {
+    "verbose": true
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nouvalkaff/palugada_project.git"
@@ -30,6 +33,7 @@
     "urldecode": "^1.0.1"
   },
   "devDependencies": {
+    "jest": "^29.6.4",
     "nodemon": "^2.0.20"
   }
 }

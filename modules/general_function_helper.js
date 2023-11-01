@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const isEmpty = require('lodash/isEmpty');
 const { bullets, commands } = require('../constant/commitMaker');
 const { arrowTail0, arrowTail1, arrowTail2, point } = bullets;
 const { COMMIT_COMMAND, NEXT_MESSAGE } = commands;
@@ -18,7 +17,7 @@ const capsMe = (string) =>
 const array2string = (array) => String(array).replace(/\,/g, ', ');
 
 const getIdnYear = (time) => {
-  const regex = /20\d{2}/;
+  const regex = /[0-9]{4}/;
 
   const year = String(time).match(regex);
 
