@@ -262,7 +262,7 @@ const smartCommitHandler = (object) => {
 };
 
 const nameErrorMessage =
-  'Cek kembali input nama anda. Nama harus terdiri dari 3 - 50 huruf.';
+  'Cek kembali nama anda. Nama terdiri dari 3 - 50 huruf dan tidak boleh terdapat angka.';
 
 const emailErrorMessage = 'Format email salah, cek kembali email anda.';
 
@@ -271,7 +271,7 @@ const phoneNumErrorMessage =
 
 const errorMessageSimplifier = (error) => {
   const detailErr = error.message;
-  if (detailErr.includes('/^[a-zA-Z]{3,50}$/')) return nameErrorMessage;
+  if (detailErr.includes('/^[a-zA-Zs]{3,50}$/')) return nameErrorMessage;
   if (detailErr.includes('must be a valid email')) return emailErrorMessage;
   if (detailErr.includes('/^[0-9]{9,13}$/')) return phoneNumErrorMessage;
   return detailErr;
@@ -280,7 +280,7 @@ const errorMessageSimplifier = (error) => {
 const validateUserFidyah = (object) => {
   const schema = Joi.object({
     name: Joi.string()
-      .pattern(/^[a-zA-Z]{3,50}$/)
+      .pattern(/^[a-zA-Z\s]{3,50}$/)
       .required(),
     email: Joi.string().email().required(),
     phone_num: Joi.string()
