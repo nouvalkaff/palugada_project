@@ -21,6 +21,10 @@ exports.calculateFidyah = async (rate, req) => {
 
   toInt(rate);
   let fidyahPaid = 0;
+  let multiplier;
+  let addition;
+  let quantity;
+  let yearDiff;
 
   const idnTime = new Date().toLocaleString('en-US', {
     timeZone: 'Asia/Jakarta'
@@ -35,13 +39,13 @@ exports.calculateFidyah = async (rate, req) => {
       toInt(year);
       toInt(days);
 
-      const yearDiff = idnYear - year;
+      yearDiff = idnYear - year;
 
       if (yearDiff < 0) throw errorMessage;
 
-      const quantity = days;
-      const multiplier = yearDiff === 0 ? 1 : yearDiff;
-      const addition = +(multiplier * quantity * rate).toFixed(2);
+      quantity = days;
+      multiplier = yearDiff === 0 ? 1 : yearDiff;
+      addition = +(multiplier * quantity * rate).toFixed(2);
       fidyahPaid += addition;
     }
   } else {
@@ -51,18 +55,17 @@ exports.calculateFidyah = async (rate, req) => {
       toInt(year);
       toInt(days);
 
-      const yearDiff = idnYear - year;
+      yearDiff = idnYear - year;
 
       if (yearDiff < 0) throw errorMessage;
 
-      const quantity = days;
-      const multiplier = 1;
-      const addition = +(multiplier * quantity * rate).toFixed(2);
+      quantity = days;
+      multiplier = 1;
+      addition = +(multiplier * quantity * rate).toFixed(2);
       fidyahPaid += addition;
     }
   }
 
-  let result;
   let totalFidyah;
   let bayarFidyah = `${currency} `;
   let qadhaPuasa = 0;
@@ -73,8 +76,6 @@ exports.calculateFidyah = async (rate, req) => {
       : formatNumber(fidyahPaid);
 
     bayarFidyah += totalFidyah;
-
-    result = { bayarFidyah, qadhaPuasa };
   } else {
     totalFidyah = String(rate).includes('.')
       ? fidyahPaid.toFixed(2)
@@ -82,9 +83,7 @@ exports.calculateFidyah = async (rate, req) => {
 
     bayarFidyah += totalFidyah;
     qadhaPuasa = body.reduce((a, b) => a + b.days, 0);
-
-    result = { bayarFidyah, qadhaPuasa };
   }
 
-  return result;
+  return { bayarFidyah, qadhaPuasa, qty: multiplier * quantity };
 };
